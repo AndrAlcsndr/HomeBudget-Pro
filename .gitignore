@@ -1,0 +1,52 @@
+﻿############################
+# webApi ignore
+############################
+
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+
+# EF Core
+Migrations/*Snapshot.cs
+
+# Publish
+publish/
+*.pubxml
+
+############################
+# webFrontent ignore
+############################
+
+node_modules/
+dist/
+.vite/
+
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+############################
+# arquivos de ambiente e configuração
+############################
+
+.env
+.env.*
+appsettings.Development.json
+
+############################
+# IDEs
+############################
+
+.vscode/
+.idea/
+
+############################
+# OS
+############################
+
+.DS_Store
+Thumbs.db
