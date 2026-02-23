@@ -1,0 +1,6 @@
+@HomeBudget.Infra_HostAddress = http://localhost:5269
+
+GET {{HomeBudget.Infra_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
