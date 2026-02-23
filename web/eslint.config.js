@@ -18,6 +18,12 @@ export default defineConfig([
       reactRefresh.configs.vite,
       prettier,
     ],
+    plugins: {
+      prettier: prettierPlugin,
+    },
+    rules: {
+      'prettier/prettier': 'warn',
+    },
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
