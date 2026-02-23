@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../HomeBudget.Application/HomeBudget.Application.csproj" />
+  <Project Path="HomeBudget.API.csproj" />
+</Solution>
