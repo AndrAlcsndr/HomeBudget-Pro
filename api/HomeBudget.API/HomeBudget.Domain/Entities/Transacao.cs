@@ -13,5 +13,9 @@ namespace HomeBudget.Domain.Entities
         public double Receitas { get; set; } = 0;
         public double Despesas { get; set; } = 0;
 
+        public Pessoa? Pessoa { get; set; }
+        public Categoria? Categoria { get; set; }
+
+
     }
 }
