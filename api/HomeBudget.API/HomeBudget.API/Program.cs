@@ -31,6 +31,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers(); // habilita controllers
+app.MapControllers(); 
 
 app.Run();
