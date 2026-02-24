@@ -50,3 +50,5 @@ appsettings.Development.json
 
 .DS_Store
 Thumbs.db
+/HomeBudget.Api/HomeBudget.Api.csproj.Backup.tmp
+/HomeBudget.Api/HomeBudget.Api.sln
