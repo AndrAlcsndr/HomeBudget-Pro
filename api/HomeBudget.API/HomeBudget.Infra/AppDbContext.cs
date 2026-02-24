@@ -13,8 +13,14 @@ namespace HomeBudget.Infra
         public DbSet<Categoria> CategoriaDbContext { get; set; }
         public DbSet<Transacao> TransacaoDbContext { get; set; }
 
-       
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
+        }
+
+        
 
     }
 }
