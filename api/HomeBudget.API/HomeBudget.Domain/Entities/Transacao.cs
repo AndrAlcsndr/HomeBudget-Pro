@@ -1,4 +1,6 @@
-﻿namespace HomeBudget.Domain.Entities
+﻿using HomeBudget.Domain.Enums;
+
+namespace HomeBudget.Domain.Entities
 {
     public class Transacao
     {
