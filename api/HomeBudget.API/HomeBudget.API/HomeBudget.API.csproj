@@ -25,4 +25,8 @@
     <ProjectReference Include="..\HomeBudget.Infra\HomeBudget.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
