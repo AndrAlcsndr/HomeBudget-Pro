@@ -20,7 +20,12 @@ namespace HomeBudget.Infra
             base.OnModelCreating(modelBuilder);
         }
 
-        
+        public void RemoveEntityContext<TEntity>(TEntity entity) where TEntity : class
+        {
+            if (entity is not null)
+                Set<TEntity>().Remove(entity);
+        }
+
 
     }
 }
