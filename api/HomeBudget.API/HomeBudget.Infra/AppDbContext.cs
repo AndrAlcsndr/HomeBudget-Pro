@@ -9,6 +9,12 @@ namespace HomeBudget.Infra
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
         {}
 
+        public DbSet<Pessoa> PessoaDbContext { get; set; }
+        public DbSet<Categoria> CategoriaDbContext { get; set; }
+        public DbSet<Transacao> TransacaoDbContext { get; set; }
+
        
+
+
     }
 }
