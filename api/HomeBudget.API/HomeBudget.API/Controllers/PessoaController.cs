@@ -39,6 +39,16 @@ namespace HomeBudget.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(PessoaDto), 200)]
+        [ProducesResponseType(typeof(ProblemDetails), 404)]
+        public async Task<IActionResult> GetById(Guid Id)
+        {
+            var result = await _service.GetById(Id);
+            return Ok(result);
+        }
+
+
 
     }
 }
