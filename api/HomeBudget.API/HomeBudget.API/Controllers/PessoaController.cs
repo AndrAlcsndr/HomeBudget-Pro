@@ -30,5 +30,15 @@ namespace HomeBudget.API.Controllers
             );
         }
 
+
+        [HttpGet("paged")]
+        [ProducesResponseType(typeof(PagedResult<FinancasPessoaFiltroDto>), 200)]
+        public async Task<IActionResult> GetPaged([FromQuery] PagedRequest request)
+        {
+            var result = await _service.GetPagedAsync(request);
+            return Ok(result);
+        }
+
+
     }
 }
