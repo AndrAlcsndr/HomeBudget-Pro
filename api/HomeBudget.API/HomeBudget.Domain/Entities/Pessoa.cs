@@ -8,6 +8,7 @@ namespace HomeBudget.Domain.Entities
         public List<int> IdTransacoes { get; set; } = [];
         public required string Nome { get; set; }
         public required string Cpf { get; set; }
+        public int Idade { get; set; }
         public StatusPessoa Status { get; set; }
 
         public DateTime DataCriacao { get; set; }

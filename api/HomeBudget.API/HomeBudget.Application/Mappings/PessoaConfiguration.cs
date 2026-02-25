@@ -14,7 +14,7 @@ public class PessoaConfiguration : IEntityTypeConfiguration<Pessoa>
 
         builder.Property(p => p.Nome)
                .IsRequired()
-               .HasMaxLength(150);
+               .HasMaxLength(200);
 
         builder.Property(p => p.Cpf)
                .IsRequired()
@@ -24,6 +24,9 @@ public class PessoaConfiguration : IEntityTypeConfiguration<Pessoa>
         builder.Property(p => p.Status)
                .IsRequired()
                .HasConversion<int>();
+
+        builder.Property(p => p.Idade)
+               .IsRequired();
 
         builder.Property(p => p.DataCriacao)
                .IsRequired();

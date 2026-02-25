@@ -17,7 +17,11 @@ public class CategoriaConfiguration : IEntityTypeConfiguration<Categoria>
                .HasMaxLength(100);
 
         builder.Property(c => c.Descricao)
-               .HasMaxLength(300);
+               .HasMaxLength(400);
+
+        builder.Property(p => p.Finalidade)
+              .IsRequired()
+              .HasConversion<int>();
 
         builder.Property(c => c.DataCriacao)
                .IsRequired();
