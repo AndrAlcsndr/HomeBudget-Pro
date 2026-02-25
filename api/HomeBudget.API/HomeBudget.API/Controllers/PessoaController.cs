@@ -48,6 +48,14 @@ namespace HomeBudget.API.Controllers
             return Ok(result);
         }
 
+        [HttpDelete("{id:guid}")]
+        [ProducesResponseType(typeof(PessoaDto), 200)]
+        public async Task<IActionResult> DeleteById(Guid Id)
+        {
+            var result = await _service.DeleteById(Id);
+            return Ok(result);
+        }
+
 
 
     }
