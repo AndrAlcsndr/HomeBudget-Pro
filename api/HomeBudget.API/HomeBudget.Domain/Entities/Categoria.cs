@@ -2,8 +2,8 @@
 {
     public class Categoria
     {
-        public int Id { get; set; }
-        public List<int> IdTransacoes { get; set; } = [];
+        public Guid Id { get; set; }
+        public List<Guid> IdTransacoes { get; set; } = [];
 
         public required string Nome { get; set; }
         public string ? Descricao { get; set;  }

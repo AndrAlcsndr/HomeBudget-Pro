@@ -4,14 +4,15 @@ namespace HomeBudget.Domain.Entities
 {
     public class Transacao
     {
-        public int Id { get; set; }
-        public int IdCategoria { get; set;  }
-        public int IdPessoa { get; set; }
+        public Guid Id { get; set; }
+        public Guid? IdCategoria { get; set;  }
+        public Guid? IdPessoa { get; set; }
 
         public StatusTransacao Status { get; set; }
 
-        public double Receitas { get; set; } = 0;
-        public double Despesas { get; set; } = 0;
+        public double Receitas { get; set; } = 0.00;
+        public double Despesas { get; set; } = 0.00;
+        public double Saldo { get; set; } = 0.00;
 
         public Pessoa? Pessoa { get; set; }
         public Categoria? Categoria { get; set; }
