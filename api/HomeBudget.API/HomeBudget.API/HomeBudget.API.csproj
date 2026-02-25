@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HomeBudget.Application\HomeBudget.Application.csproj" />
     <ProjectReference Include="..\HomeBudget.Infra\HomeBudget.Infra.csproj" />
   </ItemGroup>
 
