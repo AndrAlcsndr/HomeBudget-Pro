@@ -25,9 +25,10 @@ namespace HomeBudget.API.Controllers
         public async Task<IActionResult> Create([FromBody] CreatePessoaDto dto)
         {
             var result = await _service.CreateAsync(dto);
-            return result.ToActionResult(this, id =>
-                CreatedAtAction(nameof(GetById), new { id }, new { id })
-            );
+            if (!result.Success)
+                return BadRequest(new ProblemDetails { Title = result.Title, Detail = result.Message });
+
+            return Ok(result.Data);
         }
 
         /// <summary>Obtem uma consulta paginada de todos as pessoas do sistema, e suas finanças</summary>
@@ -45,7 +46,7 @@ namespace HomeBudget.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), 404)]
         public async Task<IActionResult> GetById(Guid Id)
         {
-            var result = await _service.GetById(Id);
+            var result = await _service.GetByIdAsync(Id);
             return Ok(result);
         }
 
@@ -54,7 +55,7 @@ namespace HomeBudget.API.Controllers
         [ProducesResponseType(typeof(PessoaDto), 200)]
         public async Task<IActionResult> DeleteById(Guid Id)
         {
-            var result = await _service.DeleteById(Id);
+            var result = await _service.DeleteAsync(Id);
             return Ok(result);
         }
 
@@ -65,7 +66,10 @@ namespace HomeBudget.API.Controllers
         public async Task<IActionResult> Update([FromBody] UpdatePessoaDto dto)
         {
             var result = await _service.UpdateAsync(dto);
-            return result.ToActionResult(this);
+            if (!result.Success)
+                return BadRequest(new ProblemDetails { Title = result.Title, Detail = result.Message });
+
+            return Ok(result.Data);
         }
 
 
