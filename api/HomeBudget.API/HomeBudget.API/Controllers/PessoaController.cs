@@ -16,5 +16,19 @@ namespace HomeBudget.API.Controllers
         {
             _service = pessoaService;
         }
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(object), 201)]
+        [ProducesResponseType(typeof(ProblemDetails), 400)]
+        [ProducesResponseType(typeof(ProblemDetails), 409)]
+        public async Task<IActionResult> Create([FromBody] CreatePessoaDto dto)
+        {
+            var result = await _service.CreateAsync(dto);
+            return result.ToActionResult(this, id =>
+                CreatedAtAction(nameof(GetById), new { id }, new { id })
+            );
+        }
+
     }
 }
