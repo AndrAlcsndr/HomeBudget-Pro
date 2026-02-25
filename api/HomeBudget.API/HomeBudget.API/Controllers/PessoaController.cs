@@ -57,6 +57,15 @@ namespace HomeBudget.API.Controllers
         }
 
 
+        [HttpPut("{id:guid}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(typeof(ProblemDetails), 400)]
+        public async Task<IActionResult> Update([FromBody] UpdatePessoaDto dto)
+        {
+            var result = await _service.UpdateAsync(dto);
+            return result.ToActionResult(this);
+        }
+
 
     }
 }
