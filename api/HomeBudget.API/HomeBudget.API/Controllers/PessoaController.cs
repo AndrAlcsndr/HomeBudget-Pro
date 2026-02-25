@@ -17,7 +17,7 @@ namespace HomeBudget.API.Controllers
             _service = pessoaService;
         }
 
-
+        /// <summary>Cria uma nova pessoa</summary>
         [HttpPost]
         [ProducesResponseType(typeof(object), 201)]
         [ProducesResponseType(typeof(ProblemDetails), 400)]
@@ -30,7 +30,7 @@ namespace HomeBudget.API.Controllers
             );
         }
 
-
+        /// <summary>Obtem uma consulta paginada de todos as pessoas do sistema, e suas finanças</summary>
         [HttpGet("paged")]
         [ProducesResponseType(typeof(PagedResult<FinancasPessoaFiltroDto>), 200)]
         public async Task<IActionResult> GetPaged([FromQuery] PagedRequest request)
@@ -39,6 +39,7 @@ namespace HomeBudget.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>Obtem uma consulta um usuário especifico, baseado no Id fornecido </summary>
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(PessoaDto), 200)]
         [ProducesResponseType(typeof(ProblemDetails), 404)]
@@ -48,6 +49,7 @@ namespace HomeBudget.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>Realiza a exclusão de um determinado usuário </summary>
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(typeof(PessoaDto), 200)]
         public async Task<IActionResult> DeleteById(Guid Id)
@@ -56,7 +58,7 @@ namespace HomeBudget.API.Controllers
             return Ok(result);
         }
 
-
+        /// <summary>Realiza a atualização dos dados de um determinado usuario, atraves de seu DTO </summary>
         [HttpPut("{id:guid}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ProblemDetails), 400)]
