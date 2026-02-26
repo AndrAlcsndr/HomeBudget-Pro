@@ -9,10 +9,12 @@ namespace HomeBudget.Application.Services
     public class CategoriaAppService : ICategoriaAppService
     {
         private readonly ICategoriaRepository _repository;
+        private readonly IMapper _mapper;
 
-        public CategoriaAppService(ICategoriaRepository repository)
+        public CategoriaAppService(ICategoriaRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
 
