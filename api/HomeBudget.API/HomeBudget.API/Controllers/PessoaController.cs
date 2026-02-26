@@ -52,7 +52,8 @@ namespace HomeBudget.API.Controllers
 
         /// <summary>Realiza a exclusão de um determinado usuário </summary>
         [HttpDelete("{id:guid}")]
-        [ProducesResponseType(typeof(PessoaDto), 200)]
+        [ProducesResponseType(typeof(bool), 200)]
+        [ProducesResponseType(typeof(ProblemDetails), 404)]
         public async Task<IActionResult> DeleteById(Guid Id)
         {
             var result = await _service.DeleteAsync(Id);
