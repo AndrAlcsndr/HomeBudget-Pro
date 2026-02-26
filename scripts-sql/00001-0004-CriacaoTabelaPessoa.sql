@@ -6,3 +6,15 @@
 -- Data:       [26/02/2026]
 -- ===================================================================================
 
+BEGIN TRANSACTION;
+
+BEGIN TRY
+    
+    COMMIT TRANSACTION;
+    PRINT '';
+END TRY
+BEGIN CATCH
+    ROLLBACK TRANSACTION;
+    PRINT 'Erro ao criar tabela: ' + ERROR_MESSAGE();
+    THROW;
+END CATCH;
