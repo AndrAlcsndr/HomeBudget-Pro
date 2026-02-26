@@ -1,7 +1,10 @@
-﻿using HomeBudget.Application.Common;
+﻿using AutoMapper;
+using HomeBudget.Application.Common;
 using HomeBudget.Application.DTOs.CategoriaDtos;
 using HomeBudget.Application.DTOs.Pagination;
-using HomeBudget.Application.DTOs.PessoaDtos;
+using HomeBudget.Application.Interfaces;
+using HomeBudget.Domain.Entities;
+using HomeBudget.Domain.Enums;
 using HomeBudget.Domain.Interfaces;
 
 namespace HomeBudget.Application.Services
