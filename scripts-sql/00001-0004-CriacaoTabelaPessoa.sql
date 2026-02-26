@@ -10,8 +10,21 @@ BEGIN TRANSACTION;
 
 BEGIN TRY
     
+     CREATE TABLE Pessoa (
+        Id              UNIQUEIDENTIFIER        NOT NULL,
+        Nome            varchar(200)     NOT NULL,
+        Cpf             CHAR(12)          NOT NULL,
+        Status          int        NOT NULL,
+        Idade           int      NOT NULL,
+        DataCriacao     DATE              NOT NULL,
+        DataModificacao DATE              NOT NULL,
+        
+        CONSTRAINT PK_Pessoa PRIMARY KEY (Id)
+        );
+
     COMMIT TRANSACTION;
-    PRINT '';
+    
+    PRINT 'Tabela Pessoa criada com sucesso.';
 END TRY
 BEGIN CATCH
     ROLLBACK TRANSACTION;
