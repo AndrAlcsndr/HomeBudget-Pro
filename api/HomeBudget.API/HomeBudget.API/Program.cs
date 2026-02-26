@@ -1,4 +1,4 @@
-
+using HomeBudget.Application.AutoMapper.CategoriaProfile;
 using HomeBudget.Infra;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +8,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")
     ));
+
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<CategoriaProfile>();
+});
+
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
