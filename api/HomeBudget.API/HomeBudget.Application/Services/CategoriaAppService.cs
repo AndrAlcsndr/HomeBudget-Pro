@@ -6,7 +6,7 @@ using HomeBudget.Domain.Interfaces;
 
 namespace HomeBudget.Application.Services
 {
-    public class CategoriaAppService
+    public class CategoriaAppService : ICategoriaAppService
     {
         private readonly ICategoriaRepository _repository;
 
