@@ -12,9 +12,12 @@ public class TransacaoConfiguration : IEntityTypeConfiguration<Transacao>
 
         builder.HasKey(t => t.Id);
 
-        builder.Property(t => t.Status)
-               .IsRequired()
-               .HasConversion<int>();
+        builder.Property(p => p.Tipo)
+              .IsRequired()
+              .HasConversion<int>();
+
+        builder.Property(c => c.Descricao)
+              .HasMaxLength(400);
 
         // Configuração de casas decimais para receitas 
         builder.Property(t => t.Receitas)
@@ -23,6 +26,10 @@ public class TransacaoConfiguration : IEntityTypeConfiguration<Transacao>
 
         // Configuração de casas decimais para despesas 
         builder.Property(t => t.Despesas)
+               .HasColumnType("decimal(18,2)")
+               .IsRequired();
+
+        builder.Property(t => t.Saldo)
                .HasColumnType("decimal(18,2)")
                .IsRequired();
 
