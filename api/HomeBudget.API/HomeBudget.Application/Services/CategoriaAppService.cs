@@ -87,9 +87,15 @@ namespace HomeBudget.Application.Services
             return OperationResult<CategoriaDto>.Ok(_mapper.Map<CategoriaDto>(categoria));
         }
 
-        public Task<OperationResult<CategoriaDto>> GetByIdAsync(Guid id)
+        public async Task<OperationResult<bool>> DeleteAsync(Guid id)
         {
-            return _repository.GetByIdAsync(id);
+            var categoria = await _repository.GetByIdAsync(id);
+            if (categoria is null)
+                return OperationResult<bool>.Fail("Categoria não encontrada.");
+
+            await _repository.DeleteAsync(categoria);
+
+            return OperationResult<bool>.Ok(true);
         }
 
         Task<OperationResult<bool>> DeleteAsync(Guid id)
