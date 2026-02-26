@@ -79,7 +79,12 @@ namespace HomeBudget.Application.Services
 
         public async Task<OperationResult<CategoriaDto>> GetByIdAsync(Guid id)
         {
-            return _repository.CreateAsync(dto);
+            var categoria = await _repository.GetByIdAsync(id);
+
+            if (categoria is null)
+                return OperationResult<CategoriaDto>.Fail("Categoria não encontrada.");
+
+            return OperationResult<CategoriaDto>.Ok(_mapper.Map<CategoriaDto>(categoria));
         }
 
         public Task<OperationResult<CategoriaDto>> GetByIdAsync(Guid id)
