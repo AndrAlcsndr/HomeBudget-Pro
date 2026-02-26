@@ -98,14 +98,29 @@ namespace HomeBudget.Application.Services
             return OperationResult<bool>.Ok(true);
         }
 
-        Task<OperationResult<bool>> DeleteAsync(Guid id)
+
+        public async Task<OperationResult<bool>> UpdateAsync(UpdateCategoriaDto dto)
         {
-            return _repository.DeleteAsync(id);
+            try
+            {
+                var categoriaValidation = _mapper.Map<CreateCategoriaDto>(dto);
+                (bool flowControl, OperationResult<bool> value) = await ValidarDadosBasicosCategoria(categoriaValidation);
+                if (!flowControl)
+                {
+                    return value!;
+                }
+
+                var categoria = _mapper.Map<Categoria>(dto);
+
+                await _repository.UpdateAsync(categoria);
+
+                return OperationResult<bool>.Ok(true, "Categoria atualizada com sucesso.");
         }
-        Task<OperationResult<bool>> UpdateAsync(UpdateCategoriaDto dto)
+            catch (Exception ex)
         {
-            return _repository.UpdateAsync(dto);
+                return OperationResult<bool>.Fail($"Ocorreu um erro ao atualizar a categoria, {ex.Message}. Tente novamente mais tarde.");
         }
 
     }
+}
 }
