@@ -103,9 +103,25 @@ namespace HomeBudget.Application.Services
 
                 return  OperationResult<bool>.Ok(true, "Dados atualizados com sucesso.");
         }
-        Task<OperationResult<bool>> UpdateAsync(UpdatePessoaDto dto)
+            catch (Exception ex)
+            {
+                return OperationResult<bool>.Fail(
+                    $"Erro ao atualizar pessoa: {ex.Message}");
+            }      }
+
+        private async Task<(bool flowControl, OperationResult<bool> value)>
+            ValidarDadosBasicosPessoa(CreatePessoaDto dto)
         {
-            return _repository.UpdateAsync(dto);
+            if (string.IsNullOrWhiteSpace(dto.Nome))
+                return (false, OperationResult<bool>.Fail("Nome é obrigatório."));
+
+            if (await _repository.PessoaExistente(dto.Nome))
+                return (flowControl: false, value: OperationResult<bool>.Fail("Outro cadastro já possui este nome."));
+
+            if (dto.Nome.Length > 200)
+                return (false, OperationResult<bool>.Fail("Nome muito longo."));
+
+            return (true, OperationResult<bool>.Ok(true));
         }
     }
 }
