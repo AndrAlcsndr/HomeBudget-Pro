@@ -21,10 +21,6 @@ public class PessoaConfiguration : IEntityTypeConfiguration<Pessoa>
                .HasMaxLength(11)
                .IsFixedLength();
 
-        builder.Property(p => p.Status)
-               .IsRequired()
-               .HasConversion<int>();
-
         builder.Property(p => p.Idade)
                .IsRequired();
 
@@ -39,6 +35,5 @@ public class PessoaConfiguration : IEntityTypeConfiguration<Pessoa>
                .HasForeignKey(t => t.IdPessoa)
                .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Ignore(p => p.IdTransacoes);
     }
 }

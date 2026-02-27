@@ -5,7 +5,6 @@ namespace HomeBudget.Domain.Entities
     public class Pessoa
     {
         public Guid Id { get; set; }
-        public List<int> IdTransacoes { get; set; } = [];
         public required string Nome { get; set; }
         public required string Cpf { get; set; }
         public int Idade { get; set; }
