@@ -59,7 +59,7 @@ namespace HomeBudget.API.Controllers
         }
 
         /// <summary>Realiza a atualização dos dados de uma determinada categoria, atraves de seu DTO </summary>
-        [HttpPut("{id:guid}")]
+        [HttpPut("")]
         [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ProblemDetails), 400)]
         public async Task<IActionResult> Update([FromBody] UpdateCategoriaDto dto)
