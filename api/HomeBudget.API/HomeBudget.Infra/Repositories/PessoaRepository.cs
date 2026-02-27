@@ -27,7 +27,7 @@ namespace HomeBudget.Infra.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> NomeExistente(string nome, Guid idPessoa)
+        public async Task<bool> PessoaExistente(string nome, Guid idPessoa)
         {
             return await _context.PessoaDbContext
                 .Where(s =>
