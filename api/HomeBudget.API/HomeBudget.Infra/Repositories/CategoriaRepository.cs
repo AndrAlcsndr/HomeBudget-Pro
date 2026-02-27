@@ -98,16 +98,6 @@ namespace HomeBudget.Infra.Repositories
         }
 
 
-        private static IQueryable<Categoria> ApplyTipoFilter(
-          IQueryable<Categoria> query,
-          TipoCategoria? tipo)
-        {
-            bool allStatus = tipo == (TipoCategoria)Tipo.Todas;
-            return tipo.HasValue && !allStatus
-                ? query.Where(d => d.Finalidade == tipo.Value)
-                : query;
-        }
-
         private static IQueryable<Categoria> ApplySorting(
           IQueryable<Categoria> query,
           string? sortBy,
