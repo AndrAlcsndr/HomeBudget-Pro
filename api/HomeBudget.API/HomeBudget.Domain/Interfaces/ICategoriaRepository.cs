@@ -2,7 +2,7 @@
 
 namespace HomeBudget.Domain.Interfaces
 {
-    public interface ICategoriaRepository
+    public interface ICategoriaRepository<T> where T : class
     {
         Task AddAsync(Categoria categoria);
         Task UpdateAsync(Categoria categoria);
