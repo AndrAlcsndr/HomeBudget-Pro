@@ -6,7 +6,7 @@ using HomeBudget.Application.Interfaces;
 
 namespace HomeBudget.Application.Services
 {
-    public class TransacaoAppService
+    public class TransacaoAppService : ITransacaoAppService
     {
 
         private readonly ITransacaoAppService _service;
