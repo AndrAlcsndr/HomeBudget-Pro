@@ -44,6 +44,13 @@ namespace HomeBudget.Infra.Repositories
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
+        public async Task UpdateAsync(Pessoa pessoa)
+        {
+            pessoa.DataModificacao = DateTime.UtcNow;
+            _context.PessoaDbContext.Update(pessoa);
+            await _context.SaveChangesAsync();
+        }
+
 
     }
 }
