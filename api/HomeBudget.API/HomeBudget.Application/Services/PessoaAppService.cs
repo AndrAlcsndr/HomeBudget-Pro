@@ -71,9 +71,37 @@ namespace HomeBudget.Application.Services
             return OperationResult<PessoaDto>.Ok(dto);
         }
 
-        Task<OperationResult<bool>> DeleteAsync(Guid id)
+        public async Task<OperationResult<bool>> DeleteAsync(Guid id)
         {
-            return _repository.DeleteAsync(id);
+            var pessoa = await _repository.GetByIdAsync(id);
+
+            if (pessoa == null)
+                return OperationResult<bool>.Fail("Pessoa não encontrada.");
+
+            await _repository.DeleteAsync(pessoa);
+
+            return OperationResult<bool>.Ok(true, "Cadastro deletado com sucesso.");
+        }
+
+        public async Task<OperationResult<bool>> UpdateAsync(UpdatePessoaDto dto)
+        {
+            try
+            {
+                if (dto == null)
+                    return OperationResult<bool>.Fail("Dados inválidos.");
+
+                var createDto = _mapper.Map<CreatePessoaDto>(dto);
+
+                var (flowControl, validationResult) = await ValidarDadosBasicosPessoa(createDto);
+
+                if (!flowControl)
+                    return OperationResult<bool>.Fail(validationResult.Message!);
+
+                var pessoa = _mapper.Map<Pessoa>(dto);
+                await _repository.UpdateAsync(pessoa);
+
+
+                return  OperationResult<bool>.Ok(true, "Dados atualizados com sucesso.");
         }
         Task<OperationResult<bool>> UpdateAsync(UpdatePessoaDto dto)
         {
