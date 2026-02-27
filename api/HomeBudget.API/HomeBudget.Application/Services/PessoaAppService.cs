@@ -117,7 +117,7 @@ namespace HomeBudget.Application.Services
             if (string.IsNullOrWhiteSpace(dto.Nome))
                 return (false, OperationResult<bool>.Fail("Nome é obrigatório."));
 
-            if (await _repository.PessoaExistente(dto.Nome))
+            if (await _repository.PessoaExistente(dto.Nome, dto.Id))
                 return (flowControl: false, value: OperationResult<bool>.Fail("Outro cadastro já possui este nome."));
 
             if (dto.Nome.Length > 200)
