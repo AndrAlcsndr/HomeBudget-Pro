@@ -19,6 +19,7 @@ namespace HomeBudget.Infra.Repositories
         public async Task AddAsync(Categoria categoria)
         {
             categoria.Id = Guid.NewGuid();
+            categoria.DataCriacao = DateTime.UtcNow;
 
             await _context.Categoria.AddAsync(categoria);
             await _context.SaveChangesAsync();
