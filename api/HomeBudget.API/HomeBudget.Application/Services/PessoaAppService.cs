@@ -7,11 +7,13 @@ namespace HomeBudget.Application.Services
 {
     public class PessoaAppService
     {
-        private readonly IPessoaRepository _repository;
+        private readonly IPessoaRepository<PagedRequest> _repository;
+        private readonly IMapper _mapper;
 
-        public PessoaAppService(IPessoaRepository repository)
+        public PessoaAppService(IPessoaRepository<PagedRequest> repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public async Task<PagedResult<PessoaDto>> GetPagedAsync(PagedRequest request)

@@ -11,10 +11,10 @@ namespace HomeBudget.Application.Services
 {
     public class CategoriaAppService : ICategoriaAppService
     {
-        private readonly ICategoriaRepository _repository;
+        private readonly ICategoriaRepository<PagedRequest> _repository;
         private readonly IMapper _mapper;
 
-        public CategoriaAppService(ICategoriaRepository repository, IMapper mapper)
+        public CategoriaAppService(ICategoriaRepository<PagedRequest> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
