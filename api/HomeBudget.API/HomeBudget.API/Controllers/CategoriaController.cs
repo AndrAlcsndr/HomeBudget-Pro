@@ -35,6 +35,7 @@ namespace HomeBudget.API.Controllers
         /// <summary>Obtem uma consulta paginada de todos as categorias do sistema </summary>
         [HttpGet("paged")]
         [ProducesResponseType(typeof(PagedResult<CategoriaRequestDto>), 200)]
+        [ProducesResponseType(typeof(ProblemDetails), 404)]
         public async Task<IActionResult> GetPaged([FromQuery] PagedRequest request)
         {
             var result = await _service.GetPagedAsync(request);
