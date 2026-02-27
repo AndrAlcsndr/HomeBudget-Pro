@@ -7,7 +7,7 @@ using System.Net.NetworkInformation;
 
 namespace HomeBudget.Infra.Repositories
 {
-    public class CategoriaRepository : ICategoriaRepository
+    public class CategoriaRepository : ICategoriaRepository<PagedRequest>
     {
         private readonly AppDbContext _context;
 
