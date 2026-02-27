@@ -20,7 +20,7 @@ namespace HomeBudget.Infra.Repositories
         {
             categoria.Id = Guid.NewGuid();
 
-            await _context.CategoriaDbContext.AddAsync(categoria);
+            await _context.Categoria.AddAsync(categoria);
             await _context.SaveChangesAsync();
         }
 
@@ -35,7 +35,7 @@ namespace HomeBudget.Infra.Repositories
 
         public async Task<Categoria?> GetByIdAsync(Guid id)
         {
-            return await _context.CategoriaDbContext
+            return await _context.Categoria
                 .AsNoTracking()
                 .Include(u => u.Transacoes)
                 .FirstOrDefaultAsync(u => u.Id == id);
@@ -45,13 +45,15 @@ namespace HomeBudget.Infra.Repositories
 
         public async Task UpdateAsync(Categoria categoria)
         {
-            _context.CategoriaDbContext.Update(categoria);
+            categoria.DataModificacao = DateTime.UtcNow;
+
+            _context.Categoria.Update(categoria);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Categoria categoria)
         {
-            _context.CategoriaDbContext.Remove(categoria);
+            _context.Categoria.Remove(categoria);
             await _context.SaveChangesAsync();
         }
 
@@ -62,7 +64,7 @@ namespace HomeBudget.Infra.Repositories
             var safeSize = request.PageSize <= 0 ? 20 : Math.Min(request.PageSize, 200);
 
             IQueryable<Categoria> query =
-                _context.CategoriaDbContext
+                _context.Categoria
                 .Include(s => s.Transacoes)
                 .AsNoTracking();
 
