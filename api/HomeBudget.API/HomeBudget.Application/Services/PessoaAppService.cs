@@ -59,9 +59,16 @@ namespace HomeBudget.Application.Services
             }
         }
 
-        public Task<OperationResult<PessoaDto>> GetByIdAsync(Guid id)
+        public async Task<OperationResult<PessoaDto>> GetByIdAsync(Guid id)
         {
-            return _repository.GetByIdAsync(id);
+            var pessoa = await _repository.GetByIdAsync(id);
+
+            if (pessoa == null)
+                return OperationResult<PessoaDto>.Fail("Pessoa não encontrada.");
+
+            var dto = _mapper.Map<PessoaDto>(pessoa);
+
+            return OperationResult<PessoaDto>.Ok(dto);
         }
 
         Task<OperationResult<bool>> DeleteAsync(Guid id)
