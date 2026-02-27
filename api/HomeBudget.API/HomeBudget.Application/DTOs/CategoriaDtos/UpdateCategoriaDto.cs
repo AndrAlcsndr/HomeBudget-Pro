@@ -10,6 +10,7 @@ namespace HomeBudget.Application.DTOs.CategoriaDtos
         public required string Descricao { get; set; }
         public TipoCategoria Finalidade { get; set; }
         public DateTime DataModificacao { get; set; }
+        public DateTime DataCriacao { get; set; }
         public List<Transacao> Transacoes { get; set; } = [];
 
     }
