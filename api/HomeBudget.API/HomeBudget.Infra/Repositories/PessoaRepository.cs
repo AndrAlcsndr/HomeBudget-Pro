@@ -21,16 +21,18 @@ namespace HomeBudget.Infra.Repositories
         public async Task AddAsync(Pessoa pessoa)
         {
             pessoa.Id = Guid.NewGuid();
+            pessoa.DataCriacao = DateTime.UtcNow;
 
             await _context.PessoaDbContext.AddAsync(pessoa);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> NomeExistente(string nome)
+        public async Task<bool> NomeExistente(string nome, Guid idPessoa)
         {
             return await _context.PessoaDbContext
                 .Where(s =>
-                    s.Nome.Normalize().Trim() == nome.Normalize().Trim())
+                    s.Nome.Normalize().Trim() == nome.Normalize().Trim()
+                    && s.Id == idPessoa)
                 .AnyAsync();
         }
 
