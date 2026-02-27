@@ -65,7 +65,8 @@ namespace HomeBudget.Application.Services
             if (string.IsNullOrWhiteSpace(createDto.Nome))
                 return (flowControl: false, value: OperationResult<bool>.Fail("Nome de cadastro é obrigatório."));
 
-            if (await _repository.NomeExistente(createDto.Nome))
+            // Verificação de concorrencia
+            if (await _repository.CategoriaExistente(createDto.Nome, createDto.Id))
                 return (flowControl: false, value: OperationResult<bool>.Fail("Outro cadastro já possui este nome."));
 
             if (createDto.Descricao?.Length > 400)

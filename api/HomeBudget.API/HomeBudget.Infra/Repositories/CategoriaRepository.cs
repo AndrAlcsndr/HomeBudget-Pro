@@ -24,11 +24,12 @@ namespace HomeBudget.Infra.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> NomeExistente(string nome)
+        public async Task<bool> CategoriaExistente(string nome, Guid idCategoria)
         {
-            return await _context.CategoriaDbContext
+            return await _context.Categoria
+                //Existe e não se trata do mesmo item de inserção/update ?
                 .Where(s => 
-                    s.Nome.Normalize().Trim() == nome.Normalize().Trim())
+                    s.Nome.Trim() == nome.Trim() && s.Id != idCategoria)
                 .AnyAsync();
         }
 
