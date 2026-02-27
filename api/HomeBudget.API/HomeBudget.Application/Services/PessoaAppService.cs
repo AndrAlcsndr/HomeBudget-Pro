@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-﻿using HomeBudget.Application.Common;
+using HomeBudget.Application.Common;
 using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.DTOs.PessoaDtos;
 using HomeBudget.Application.Interfaces;
@@ -21,12 +21,14 @@ namespace HomeBudget.Application.Services
 
         public async Task<PagedResult<PessoaDto>> GetPagedAsync(PagedRequest request)
         {
-            var (items, total) = await _repository.GetPagedAsync(request);
+            // var (items, total) = await _repository.GetPagedAsync(request);
+
+            //var mappedItems = _mapper.Map<List<PessoaDto>>(items);
 
             return new PagedResult<PessoaDto>
             {
-                Items = items,
-                Total = total,
+                Resultados = [],
+                Total = 0,
                 Page = request.Page,
                 PageSize = request.PageSize
             };
