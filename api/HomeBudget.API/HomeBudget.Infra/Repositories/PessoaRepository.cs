@@ -23,13 +23,13 @@ namespace HomeBudget.Infra.Repositories
             pessoa.Id = Guid.NewGuid();
             pessoa.DataCriacao = DateTime.UtcNow;
 
-            await _context.PessoaDbContext.AddAsync(pessoa);
+            await _context.Pessoa.AddAsync(pessoa);
             await _context.SaveChangesAsync();
         }
 
         public async Task<bool> PessoaExistente(string nome, Guid idPessoa)
         {
-            return await _context.PessoaDbContext
+            return await _context.Pessoa
                 .Where(s =>
                     s.Nome.Normalize().Trim() == nome.Normalize().Trim()
                     && s.Id == idPessoa)
@@ -38,7 +38,7 @@ namespace HomeBudget.Infra.Repositories
 
         public async Task<Pessoa?> GetByIdAsync(Guid id)
         {
-            return await _context.PessoaDbContext
+            return await _context.Pessoa
                 .AsNoTracking()
                 .Include(u => u.Transacoes)
                 .FirstOrDefaultAsync(u => u.Id == id);
@@ -47,13 +47,13 @@ namespace HomeBudget.Infra.Repositories
         public async Task UpdateAsync(Pessoa pessoa)
         {
             pessoa.DataModificacao = DateTime.UtcNow;
-            _context.PessoaDbContext.Update(pessoa);
+            _context.Pessoa.Update(pessoa);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Pessoa pessoa)
         {
-            _context.PessoaDbContext.Remove(pessoa);
+            _context.Pessoa.Remove(pessoa);
             await _context.SaveChangesAsync();
         }
 
@@ -64,7 +64,7 @@ namespace HomeBudget.Infra.Repositories
             var safeSize = request.PageSize <= 0 ? 20 : Math.Min(request.PageSize, 200);
 
             IQueryable<Pessoa> query =
-                _context.PessoaDbContext
+                _context.Pessoa
                 .Include(s => s.Transacoes)
                 .AsNoTracking();
 
