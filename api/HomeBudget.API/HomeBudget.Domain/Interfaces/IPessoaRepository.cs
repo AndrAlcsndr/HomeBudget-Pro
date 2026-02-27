@@ -8,7 +8,7 @@ namespace HomeBudget.Domain.Interfaces
         Task UpdateAsync(Pessoa pessoa);
         Task DeleteAsync(Pessoa pessoa);
         Task<Pessoa?> GetByIdAsync(Guid id);
-        Task<bool> PessoaExistente(string nome);
+        Task<bool> PessoaExistente(string nome, Guid idPessoa);
 
         Task<(IReadOnlyList<Pessoa> Items, int Total)> GetPagedAsync(T request);
     }
