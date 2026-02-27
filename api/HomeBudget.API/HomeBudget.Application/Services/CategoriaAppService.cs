@@ -41,6 +41,7 @@ namespace HomeBudget.Application.Services
                 return OperationResult<Guid>.Fail(value.Message!);
             }
 
+            //Mapeamento automatico dos dados do DTO
             var newCategoria = _mapper.Map<Categoria>(dto);
 
             try
@@ -51,14 +52,11 @@ namespace HomeBudget.Application.Services
             }
             catch (Exception ex)
             {
-                return OperationResult<Guid>.Fail($"Ocorreu um erro ao criar a categoria, {ex.Message}. Tente novamente mais tarde.");
+                return OperationResult<Guid>.Fail($"Ocorreu um erro ao criar a categoria, {ex.InnerException}. Tente novamente mais tarde.");
 
             }
 
         }
-
-        
-
 
         private async Task<(bool flowControl, OperationResult<bool> value)> ValidarDadosBasicosCategoria(CreateCategoriaDto createDto)
         {
@@ -69,6 +67,7 @@ namespace HomeBudget.Application.Services
             if (await _repository.CategoriaExistente(createDto.Nome, createDto.Id))
                 return (flowControl: false, value: OperationResult<bool>.Fail("Outro cadastro já possui este nome."));
 
+            // Verificação da quanitade maxima de caracteres suportada pelo bd
             if (createDto.Descricao?.Length > 400)
                 return (flowControl: false, value: OperationResult<bool>.Fail("Quantidade de caracteres além do permitido."));
 
@@ -93,6 +92,7 @@ namespace HomeBudget.Application.Services
 
         public async Task<OperationResult<bool>> DeleteAsync(Guid id)
         {
+            //Verifica antes se o item existe
             var categoria = await _repository.GetByIdAsync(id);
             if (categoria is null)
                 return OperationResult<bool>.Fail("Categoria não encontrada.");
@@ -108,6 +108,7 @@ namespace HomeBudget.Application.Services
             try
             {
                 var categoriaValidation = _mapper.Map<CreateCategoriaDto>(dto);
+                //Verificação dos dados basicos de inserção, visto que os mesmos são obrigatórios para a atualização.
                 (bool flowControl, OperationResult<bool> value) = await ValidarDadosBasicosCategoria(categoriaValidation);
                 if (!flowControl)
                 {
@@ -122,7 +123,7 @@ namespace HomeBudget.Application.Services
         }
             catch (Exception ex)
         {
-                return OperationResult<bool>.Fail($"Ocorreu um erro ao atualizar a categoria, {ex.Message}. Tente novamente mais tarde.");
+                return OperationResult<bool>.Fail($"Ocorreu um erro ao atualizar a categoria, {ex.InnerException}. Tente novamente mais tarde.");
         }
 
     }
