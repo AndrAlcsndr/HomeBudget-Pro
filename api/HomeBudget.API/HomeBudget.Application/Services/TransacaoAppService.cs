@@ -18,12 +18,12 @@ namespace HomeBudget.Application.Services
 
         public async Task<PagedResult<TransacaoDto>> GetPagedAsync(PagedRequest request)
         {
-            var (items, total) = await _repository.GetPagedAsync(request);
+            //var (items, total) = await _repository.GetPagedAsync(request);
 
-            return new PagedResult<PessoaDto>
+            return new PagedResult<TransacaoDto>
             {
-                Items = items,
-                Total = total,
+                Resultados = [],
+                Total = 0,
                 Page = request.Page,
                 PageSize = request.PageSize
             };
