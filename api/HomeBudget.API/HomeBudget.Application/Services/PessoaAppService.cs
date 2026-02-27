@@ -32,9 +32,31 @@ namespace HomeBudget.Application.Services
             };
         }
 
-        public Task<OperationResult<Guid>> CreateAsync(CreatePessoaDto dto)
+        public async Task<OperationResult<Guid>> CreateAsync(CreatePessoaDto dto)
         {
-            return _repository.CreateAsync(dto);
+            if (dto == null)
+                return OperationResult<Guid>.Fail("Dados inválidos.");
+
+            var (flowControl, validationResult) = await ValidarDadosBasicosPessoa(dto);
+
+            if (!flowControl)
+                return OperationResult<Guid>.Fail(validationResult.Message!);
+
+            var novaPessoa = _mapper.Map<Pessoa>(dto);
+
+            try
+            {
+                await _repository.AddAsync(novaPessoa);
+
+                return OperationResult<Guid>.Ok(
+                    novaPessoa.Id,
+                    "Pessoa criada com sucesso.");
+        }
+            catch (Exception ex)
+            {
+                return OperationResult<Guid>.Fail(
+                    $"Erro ao criar pessoa: {ex.Message}");
+            }
         }
 
         public Task<OperationResult<PessoaDto>> GetByIdAsync(Guid id)
