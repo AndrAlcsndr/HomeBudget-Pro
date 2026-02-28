@@ -2,6 +2,13 @@ import { Nav } from "react-bootstrap";
 import { Link, } from "react-router-dom";
 
 function LateralNavBar() {
+const menuItems = [
+    { name: "Dashboard", path: "/" },
+    { name: "Pessoas", path: "/pessoas" },
+    { name: "Categorias", path: "/categorias" },
+    { name: "Transações", path: "/transacoes" },
+  ];
+
   return (
     <div className="d-flex">
       <div
@@ -9,7 +16,9 @@ function LateralNavBar() {
         <h4 className="mb-4">HomeBudgetApp</h4>
 
         <Nav className="flex-column">
-          
+          {menuItems.map((item) => (
+            
+          ))}
         </Nav>
 
         <div className="mt-auto">
