@@ -11,7 +11,7 @@ namespace HomeBudget.Infra
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
             optionsBuilder.UseSqlServer(
-                "Server=(localdb)\\MSSQLLocalDB;Database=homeBudgedApp;Trusted_Connection=False;TrustServerCertificate=False;"
+                "Server=(localdb)\\MSSQLLocalDB;Database=homeBudgetApp;Trusted_Connection=False;TrustServerCertificate=False;"
             );
 
             return new AppDbContext(optionsBuilder.Options);
