@@ -12,8 +12,10 @@ function LateralNavBar() {
   return (
     <div className="d-flex">
       <div className="d-flex flex-column p-3 bg-[#191919] w-[250px] h-full text-white position-fixed">
-        <div  className="d-flex flex-column p-3 bg-[#191919] w-[250px] h-full text-white position-fixed">
-        <h4 className="mb-4">HomeBudgetApp</h4>
+        <div className="flex flex-center items-center just pb-4 ">
+          <h4 className="">HomeBudget</h4>
+          <h6 className="pb-6 font-bold">App</h6>
+        </div>
 
         <Nav className="flex-column">
           {menuItems.map((item) => (
