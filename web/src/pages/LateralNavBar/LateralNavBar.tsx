@@ -32,6 +32,11 @@ function LateralNavBar() {
             </Nav.Item>
           ))}
         </Nav>
+        <div className="items-center flex justify-center mt-auto bg-neutral-800 rounded" >
+          <Nav.Link as={Link} to="/login" className="text-white my-2">
+            Login
+          </Nav.Link>
+        </div>
       </div>
     </div>
   );
