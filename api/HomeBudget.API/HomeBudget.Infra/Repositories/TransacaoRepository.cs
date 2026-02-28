@@ -1,6 +1,8 @@
-﻿namespace HomeBudget.Infra.Repositories
+﻿using HomeBudget.Domain.Interfaces;
+
+namespace HomeBudget.Infra.Repositories
 {
-    public class TransacaoRepository
+    public class TransacaoRepository : ITransacaoRepository
     {
     }
 }

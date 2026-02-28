@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HomeBudget.API.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class TransacaoController : ControllerBase
     {
         private readonly ITransacaoAppService _service;

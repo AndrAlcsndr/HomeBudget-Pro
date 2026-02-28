@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HomeBudget.API.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class CategoriaController : ControllerBase
     {
 
@@ -33,6 +35,7 @@ namespace HomeBudget.API.Controllers
         /// <summary>Obtem uma consulta paginada de todos as categorias do sistema </summary>
         [HttpGet("paged")]
         [ProducesResponseType(typeof(PagedResult<CategoriaRequestDto>), 200)]
+        [ProducesResponseType(typeof(ProblemDetails), 404)]
         public async Task<IActionResult> GetPaged([FromQuery] PagedRequest request)
         {
             var result = await _service.GetPagedAsync(request);
@@ -59,7 +62,7 @@ namespace HomeBudget.API.Controllers
         }
 
         /// <summary>Realiza a atualização dos dados de uma determinada categoria, atraves de seu DTO </summary>
-        [HttpPut("{id:guid}")]
+        [HttpPut("")]
         [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ProblemDetails), 400)]
         public async Task<IActionResult> Update([FromBody] UpdateCategoriaDto dto)

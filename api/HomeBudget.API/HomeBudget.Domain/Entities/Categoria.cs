@@ -5,10 +5,9 @@ namespace HomeBudget.Domain.Entities
     public class Categoria
     {
         public Guid Id { get; set; }
-        public List<Guid> IdTransacoes { get; set; } = [];
 
         public required string Nome { get; set; }
-        public string ? Descricao { get; set;  }
+        public required string Descricao { get; set;  }
 
         public TipoCategoria Finalidade { get; set; }
 
