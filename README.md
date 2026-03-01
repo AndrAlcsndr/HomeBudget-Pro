@@ -39,3 +39,8 @@ Projeto composto por:
 
 - Acesse a pasta 'api' e rode o comando 'dotnet restore' para
 - instalar as dependencias do projeto e depois 'dotnet run'
+
+## Migration dos dados das entidades para o banco 
+- Acessa a pasta raiz do projeto: 'api' e rode os comandos abaixo:
+    'dotnet ef migrations add InitialCreate --project HomeBudget.Infra --startup-project HomeBudget.API'
+    'dotnet ef database update --project HomeBudget.Infra --startup-project HomeBudget.API'
