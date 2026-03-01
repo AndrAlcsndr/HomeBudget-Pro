@@ -20,6 +20,19 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.AddProfile<CategoriaProfile>();
 });
 
+builder.Services.AddCors(options =>
+{
+    //Liberação dos endpoints para o frontend
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 
 builder.Services.AddScoped<IPessoaRepository<PagedRequest> ,PessoaRepository>();
 builder.Services.AddScoped<ICategoriaRepository<PagedRequest> ,CategoriaRepository>();
@@ -49,9 +62,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
 
-app.MapControllers(); 
+app.MapControllers();
 
 app.Run();
