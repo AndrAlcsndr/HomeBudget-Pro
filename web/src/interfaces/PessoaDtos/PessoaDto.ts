@@ -1,4 +1,4 @@
-import { empty_Guid } from "../utils/guid";
+import { empty_Guid } from "../../utils/guid";
 
 export class PessoaDto {
   id: string;
