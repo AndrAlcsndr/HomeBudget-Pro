@@ -1,5 +1,26 @@
 function PessoaView() {
+  const [rows, setRows] = useState<FinancasPessoaFiltroDto[]>([]);
+  const [loading, setLoading] = useState(false);
+  const api = new ApiPessoaService();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await api.getPaged({
+          page: 1,
+          pageSize: 10,
+        });
   
+        setRows(result.data ?? ([] as FinancasPessoaFiltroDto[]));
+      } catch (error) {
+        console.error("Erro ao buscar pessoas:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const columns = [
     { field: "nome", headerName: "Nome", width: 150 },
