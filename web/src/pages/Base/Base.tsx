@@ -1,20 +1,26 @@
 import LateralNavBar from "../../components/LateralNavBar/LateralNavBar";
 import { Outlet } from "react-router-dom";
-import SearchBar from "../DashBoard/components/DBSearchBar/SearchBar";
+import SearchBar from "../../components/DBSearchBar/SearchBar";
 
 function Base() {
   return (
-    <>
-      <div className="d-flex">
-        <LateralNavBar />
+    <div className="flex">
+      {/* Sidebar fixa */}
+      <LateralNavBar />
 
-        {/* Ajuste de espaçamento para exibição de conteudo */}
-        <div className="ml-[250px]"></div>
+      {/* Área principal */}
+      <div className="ml-[250px] flex flex-col w-full min-h-screen bg-gray-100">
+        
+        {/* Topo */}
         <SearchBar />
 
-        <Outlet />
+        {/* Conteúdo */}
+        <div className="p-6 flex-1">
+          <Outlet />
+        </div>
+
       </div>
-    </>
+    </div>
   );
 }
 
