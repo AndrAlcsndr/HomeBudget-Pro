@@ -9,7 +9,7 @@ import type { OperationRequest } from '../../interfaces/Operation/OperationReque
 
 
 export class ApiPessoaService {
-  private baseUrl = '/pessoa'
+  private baseUrl = '/api/pessoa'
   private api = axios.create({
   baseURL: import.meta.env.VITE_API_BACK_URL,
 })
@@ -21,8 +21,8 @@ export class ApiPessoaService {
   }
 
   // GetPaged
-  async getPaged(request: OperationRequest): Promise<OperationResult<FinancasPessoaFiltroDto>> {
-    const response = await this.api.get<OperationResult<FinancasPessoaFiltroDto>>(
+  async getPaged(request: OperationRequest): Promise<OperationResult<FinancasPessoaFiltroDto[]>> {
+    const response = await this.api.get<OperationResult<FinancasPessoaFiltroDto[]>>(
       `${this.baseUrl}/paged`,
       { params: request }
     )
