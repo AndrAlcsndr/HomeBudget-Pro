@@ -1,11 +1,12 @@
-import { Box, Card, Skeleton, Stack } from '@mui/material'
 
+// interface interna do componente
 type SkeletonComponentProps = {
   show?: boolean
   as?: 'list' | 'file-list' | 'feed-list' | 'cards' | 'item'
   times?: number
 }
 
+//Props padrões para o componente de esqueleto, com valores default para cada propriedade
 export default function SkeletonComponent({
   show = false,
   as = 'list',
@@ -15,6 +16,7 @@ export default function SkeletonComponent({
 
  
 
+  // Renderização dos componentes internos de forma condicional
   switch (as) {
     case 'feed-list':
       return <>{skeletonList()}</>
