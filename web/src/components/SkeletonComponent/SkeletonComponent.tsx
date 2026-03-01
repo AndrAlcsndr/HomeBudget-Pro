@@ -95,7 +95,6 @@ export default function SkeletonComponent({
     case "item":
       return skeletonItem();
 
-    case "list":
     default:
       return <>{skeletonList()}</>;
   }
