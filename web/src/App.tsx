@@ -5,6 +5,7 @@ import DashBoard from "./pages/DashBoard/DashBoardView";
 import PessoaView from "./pages/PessoaView/PessoaView";
 import CategoriaView from "./pages/CategoriaView/CategoriaView";
 import TransacaoView from "./pages/TransacaoView/TransacaoView";
+import NotFoundView from "./pages/NotFoundView/NotFoundView";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login" element={<DashBoard />} />
           {/*  */}
         </Route>
+        <Route path="*" element={<NotFoundView />} />
       </Routes>
     </BrowserRouter>
   );
