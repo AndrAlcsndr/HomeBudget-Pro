@@ -1,4 +1,5 @@
-﻿using HomeBudget.Application.DTOs.Pagination;
+﻿using HomeBudget.Application.DTOs.CategoriaDtos;
+using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Domain.Entities;
 using HomeBudget.Domain.Enums;
 using HomeBudget.Domain.Interfaces;
@@ -70,6 +71,7 @@ namespace HomeBudget.Infra.Repositories
                 .AsNoTracking();
 
             query = ApplySearchFilter(query, request.Search);
+            query = ApplyTipoCorrespondenciaFilter(query, (TipoCategoria)request.Tipo);
             query = ApplySorting(query, request.SortBy, request.SortDir == "asc");
 
             var total = await query.CountAsync();
@@ -125,6 +127,17 @@ namespace HomeBudget.Infra.Repositories
                     : query.OrderByDescending(d => d.DataCriacao).ThenBy(d => d.Id)
             };
         }
+
+        private static IQueryable<Categoria> ApplyTipoCorrespondenciaFilter(
+            IQueryable<Categoria> query,
+            TipoCategoria? tipoCategoria)
+        {
+            bool todosTipos = tipoCategoria.HasValue && tipoCategoria.Value == TipoCategoria.Ambas;
+            return tipoCategoria.HasValue && !todosTipos
+                ? query.Where(e => e.Finalidade == tipoCategoria)
+                : query;
+        }
+
 
     }
 }
