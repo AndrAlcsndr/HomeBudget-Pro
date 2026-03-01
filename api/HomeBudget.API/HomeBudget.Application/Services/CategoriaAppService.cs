@@ -20,13 +20,13 @@ namespace HomeBudget.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<PagedResult<CategoriaRequestDto>> GetPagedAsync(PagedRequest request)
+        public async Task<PagedResult<CategoriaDto>> GetPagedAsync(PagedRequest request)
         {
-            //var (items, total) = await _repository.GetPagedAsync(request);
+            var (items, total) = await _repository.GetPagedAsync(request);
 
-            return new PagedResult<CategoriaRequestDto>
+            return new PagedResult<CategoriaDto>
             {
-                Resultados = [],
+                Resultados = _mapper.Map<List<CategoriaDto>>(items),
                 Total = 0,
                 Page = request.Page,
                 PageSize = request.PageSize

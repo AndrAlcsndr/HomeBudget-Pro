@@ -10,6 +10,6 @@ namespace HomeBudget.Application.Interfaces
         Task<OperationResult<CategoriaDto>> GetByIdAsync(Guid id);
         Task<OperationResult<bool>> DeleteAsync(Guid id);
         Task<OperationResult<bool>> UpdateAsync(UpdateCategoriaDto dto);
-        Task<PagedResult<CategoriaRequestDto>> GetPagedAsync(PagedRequest request);
+        Task<PagedResult<CategoriaDto>> GetPagedAsync(PagedRequest request);
     }
 }
