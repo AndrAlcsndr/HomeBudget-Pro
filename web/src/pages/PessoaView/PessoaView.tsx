@@ -1,4 +1,19 @@
 function PessoaView() {
+  
+
+  const columns = [
+    { field: "nome", headerName: "Nome", width: 150 },
+    { field: "idade", headerName: "Idade", width: 110 },
+    { field: "cpf", headerName: "CPF", width: 150 },
+    {
+      field: "dataCriacaoModificacao",
+      headerName: "Data de Modificação",
+      width: 200,
+      valueFormatter: (params: any) =>
+        new Date(params.value).toLocaleString("pt-BR"),
+    },
+  ];
+
   return (
     <>
       <div className="mb-10 space-y-4">
