@@ -7,6 +7,6 @@
         public string? Search { get; set; }
         public string? SortBy { get; set; }
         public string? SortDir { get; set; }
-        public int Status { get; set; } = -1;
+        public int Tipo { get; set; } = -1;
     }
 }
