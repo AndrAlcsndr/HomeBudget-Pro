@@ -19,7 +19,7 @@ function PessoaView() {
           page: 1,
           pageSize: 10,
         });
-  
+
         setRows(result.data ?? ([] as FinancasPessoaFiltroDto[]));
       } catch (error) {
         console.error("Erro ao buscar pessoas:", error);
@@ -59,7 +59,7 @@ function PessoaView() {
         ) : (
           <DataListComponent columns={columns} rows={rows} />
         )}
-    </div>
+      </div>
     </>
   );
 }
