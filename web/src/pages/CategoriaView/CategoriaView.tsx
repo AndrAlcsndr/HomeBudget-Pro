@@ -6,7 +6,13 @@ import type { CategoriaDto } from "../../interfaces/CategoriaDtos/CategoriaDto";
 
 import DataListComponent from "../../components/DataGridComponent/DataGridComponent";
 import SkeletonComponent from "../../components/SkeletonComponent/SkeletonComponent";
-
+import ModalCriarEditarCategoria from "../../components/ModalCriarEditarCategoriaComponent/ModalCriarEditarCategoria";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEdit,
+  faTrash,
+  faUserSlash,
+} from "@fortawesome/free-solid-svg-icons";
 
 function CategoriaView() {
   const [rows, setRows] = useState<CategoriaDto[]>([]);
