@@ -132,7 +132,7 @@ namespace HomeBudget.Infra.Repositories
             IQueryable<Categoria> query,
             TipoCategoria? tipoCategoria)
         {
-            bool todosTipos = tipoCategoria.HasValue && tipoCategoria.Value == TipoCategoria.Ambas;
+            bool todosTipos = tipoCategoria.HasValue && tipoCategoria.Value == (TipoCategoria)Tipo.Todas;
             return tipoCategoria.HasValue && !todosTipos
                 ? query.Where(e => e.Finalidade == tipoCategoria)
                 : query;
