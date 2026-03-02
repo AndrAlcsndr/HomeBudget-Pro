@@ -89,7 +89,7 @@ function CategoriaView() {
       <div className="mb-10 space-y-4">
         <div className="flex items-center justify-between">
           <span className="text-2xl font-bold ">Categorias</span>
-          <Button variant="primary" onClick={() => setLoading(!loading)}>
+          <Button variant="primary" onClick={() => handleClickModal()}>
             +Novo
           </Button>
         </div>
@@ -100,6 +100,11 @@ function CategoriaView() {
           <DataListComponent columns={columns} rows={rows} />
         )}
       </div>
+      <ModalCriarEditarCategoria
+        show={true}
+        onSave={() => {}}
+        onClose={() => {}}
+      />
     </>
   );
 }
