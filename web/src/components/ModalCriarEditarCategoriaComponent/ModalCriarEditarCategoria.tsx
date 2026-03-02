@@ -37,7 +37,7 @@ function ModalCriarEditarCategoria({
   function handleChange(
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    >
   ) {
     const { name, value } = e.target;
 
