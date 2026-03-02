@@ -25,6 +25,9 @@ function ModalCriarEditarCategoria({
 
   useEffect(() => {
     if (categoria) {
+      const key = categoria.finalidade as unknown as keyof typeof TipoCategoria;
+      categoria.finalidade = TipoCategoria[key] as unknown as number; 
+
       setForm(categoria);
     } else {
       setForm(new CreateCategoriaDto());
@@ -94,6 +97,7 @@ function ModalCriarEditarCategoria({
             >
               <option value={TipoCategoria.Despesa}>Despesa</option>
               <option value={TipoCategoria.Receita}>Receita</option>
+              <option value={TipoCategoria.Ambas}>Ambas</option>
             </Form.Select>
           </Form.Group>
 
