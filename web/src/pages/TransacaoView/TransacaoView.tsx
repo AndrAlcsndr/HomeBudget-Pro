@@ -220,7 +220,6 @@ function TransacaoView() {
     <>
       <div className="flex items-center justify-between mb-3">
         <Tabs
-          id="controlled-tab-example"
           activeKey={key}
           onSelect={(k) => setKey(k!)}
           className="mb-0"
