@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { empty_Guid } from "../../utils/guid";
-import { CreatePessoaDto } from "../../interfaces/PessoaDtos/CreatePessoaDto";
 
 interface Props {
   show: boolean;
-  pessoa?: CreatePessoaDto;
-  onSave: (pessoa: CreatePessoaDto) => void;
+  transacao?: CreateTransacaoDto;
+  onSave: (transacao: CreateTransacaoDto) => void;
   onClose: () => void;
 }
 
 function ModalCriarEditarTransacoes({ show, transacao, onSave, onClose }: Props) {
-  const [form, setForm] = useState<TransacaoDto>(new CreatePessoaDto());
+  const [form, setForm] = useState<TransacaoDto>(new CreateTransacaoDto());
 
   const isEdit = form.id !== empty_Guid;
 
