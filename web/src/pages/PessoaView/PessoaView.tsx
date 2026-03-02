@@ -85,7 +85,7 @@ function PessoaView() {
               size="sm"
               className="mt-2"
               color="secondary"
-              onClick={() => handleDeactivate(row.id)}
+              onClick={() => handleDeactivate()}
             >
               <FontAwesomeIcon icon={faUserSlash} />
             </Button>
@@ -111,7 +111,7 @@ function PessoaView() {
     setConfirmModal({ show: true, id });
   };
 
-  const handleDeactivate = (id: string) => {};
+  const handleDeactivate = () => {};
 
   const addEditarPessoas = async (
     pessoa: CreatePessoaDto | UpdatePessoaDto,
