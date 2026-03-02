@@ -31,8 +31,17 @@ namespace HomeBudget.Infra.Repositories
         {
             return await _context.Pessoa
                 .Where(s =>
-                    s.Nome.Normalize().Trim() == nome.Normalize().Trim()
-                    && s.Id == idPessoa)
+                    s.Nome.Trim() == nome.Trim()
+                    && s.Id != idPessoa)
+                .AnyAsync();
+        }
+
+        public async Task<bool> CpfExistente(string cpf, Guid idPessoa)
+        {
+            return await _context.Pessoa
+                .Where(s =>
+                    s.Cpf.Trim() == cpf.Trim()
+                    && s.Id != idPessoa)
                 .AnyAsync();
         }
 
@@ -47,6 +56,7 @@ namespace HomeBudget.Infra.Repositories
         public async Task UpdateAsync(Pessoa pessoa)
         {
             pessoa.DataModificacao = DateTime.UtcNow;
+
             _context.Pessoa.Update(pessoa);
             await _context.SaveChangesAsync();
         }
