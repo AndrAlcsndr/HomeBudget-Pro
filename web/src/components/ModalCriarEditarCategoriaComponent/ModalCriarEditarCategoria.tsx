@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { Button, Modal, Form } from "react-bootstrap";
+import { TipoCategoria } from "../../enums/TipoCategoriaEnum";
+import { empty_Guid } from "../../utils/guid";
 import { CreateCategoriaDto } from "../../interfaces/CategoriaDtos/CreateCategoriaDto";
 
 interface Props {
@@ -18,6 +21,7 @@ function ModalCriarEditarCategoria({
     new CreateCategoriaDto(),
   );
 
+  const isEdit = form.id !== empty_Guid;
 
   useEffect(() => {
     if (categoria) {
