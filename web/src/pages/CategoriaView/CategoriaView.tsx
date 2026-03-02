@@ -55,19 +55,17 @@ function CategoriaView() {
       width: 200,
       sortable: false,
       filterable: false,
-      renderCell: (params: any) => {
-        const row = params.row;
-
+      renderCell: () => {
         return (
           <div style={{ display: "flex", gap: 8 }}>
-            <Button size="sm" color="warning" onClick={() => handleEdit(row)}>
+            <Button size="sm" color="warning" onClick={() => handleEdit()}>
               <FontAwesomeIcon icon={faEdit} />
             </Button>
 
             <Button
               size="sm"
               color="error"
-              onClick={() => handleDelete(row.id)}
+              onClick={() => handleDelete()}
             >
               <FontAwesomeIcon icon={faTrash} />
             </Button>
@@ -75,7 +73,7 @@ function CategoriaView() {
             <Button
               size="sm"
               color="secondary"
-              onClick={() => handleDeactivate(row.id)}
+              onClick={() => handleDeactivate()}
             >
               <FontAwesomeIcon icon={faUserSlash} />
             </Button>
@@ -86,9 +84,9 @@ function CategoriaView() {
   ];
 
   const handleClickModal = () => {};
-    const handleEdit = (categoria: CategoriaDto) =>  {}
-    const handleDelete = (id: string) => {}
-    const handleDeactivate = (id: string) => {}
+    const handleEdit = () =>  {}
+    const handleDelete = () => {}
+    const handleDeactivate = () => {}
 
   return (
     <>

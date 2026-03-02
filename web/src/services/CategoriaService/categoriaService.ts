@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-import type { OperationResult } from '../../interfaces/Operation/OperationResult'
 import type { OperationRequest } from '../../interfaces/Operation/OperationRequest'
 import type { CategoriaDto } from '../../interfaces/CategoriaDtos/CategoriaDto'
 import type { CreateCategoriaDto } from '../../interfaces/CategoriaDtos/CreateCategoriaDto'
