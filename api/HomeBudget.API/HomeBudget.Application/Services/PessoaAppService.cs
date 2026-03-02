@@ -22,9 +22,7 @@ namespace HomeBudget.Application.Services
 
         public async Task<PagedResult<PessoaDto>> GetPagedAsync(PagedRequest request)
         {
-            // var (items, total) = await _repository.GetPagedAsync(request);
-
-            //var mappedItems = _mapper.Map<List<PessoaDto>>(items);
+            var (items, total) = await _repository.GetPagedAsync(request);
 
             return new PagedResult<PessoaDto>
             {
