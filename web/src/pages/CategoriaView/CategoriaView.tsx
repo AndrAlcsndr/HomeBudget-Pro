@@ -13,32 +13,50 @@ import {
   faTrash,
   faUserSlash,
 } from "@fortawesome/free-solid-svg-icons";
+import type { UpdateCategoriaDto } from "../../interfaces/CategoriaDtos/UpdateCategoriaDto";
+import type { CreateCategoriaDto } from "../../interfaces/CategoriaDtos/CreateCategoriaDto";
+import { empty_Guid } from "../../utils/guid";
+import ModalSuccessError from "../../components/ModalSuccessErrorComponent/ModalSuccessErrorComponent";
+import ModalConfirmarCancelar from "../../components/ModalConfirmarCancelarComponent/ModalConfirmarCancelarComponent";
+
 
 function CategoriaView() {
+  const api = new ApiCategoriaService();
   const [rows, setRows] = useState<CategoriaDto[]>([]);
-    const [loading, setLoading] = useState(false);
-    const api = new ApiCategoriaService();
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const result = await api.getPaged({
-            page: 1,
-            pageSize: 10,
-          });
-  
-        setRows([...(result.items ?? [])]);
-        } catch (error) {
-        console.error("Erro ao buscar categorias:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      fetchData();
-    }, []);
-  
-    const columns = [
+  const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [categoriaEdit, setCategoriaEdit] = useState<
+    CreateCategoriaDto | UpdateCategoriaDto
+  >();
+  const [modalSuccessError, setModalSuccessError] = useState({
+    show: false,
+    type: "success" as "success" | "error",
+    message: "",
+  });
+  const [confirmModal, setConfirmModal] = useState({
+    show: false,
+    id: "",
+  });
+
+  const fetchData = async () => {
+    try {
+      const result = await api.getPaged({
+        page: 1,
+        pageSize: 10,
+      });
+
+      setRows([...(result.items ?? [])]);
+    } catch (error) {
+      console.error("Erro ao buscar categorias:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const columns = [
     { field: "nome", headerName: "Nome", width: 150 },
     { field: "descricao", headerName: "Descrição", width: 110 },
     { field: "finalidade", headerName: "Finalidade", width: 150 },
@@ -55,17 +73,18 @@ function CategoriaView() {
       width: 200,
       sortable: false,
       filterable: false,
-      renderCell: () => {
+      renderCell: (params: any) => {
+        const row = params.row;
         return (
           <div style={{ display: "flex", gap: 8 }}>
-            <Button size="sm" color="warning" onClick={() => handleEdit()}>
+            <Button size="sm" color="warning" onClick={() => handleEdit(row)}>
               <FontAwesomeIcon icon={faEdit} />
             </Button>
 
             <Button
               size="sm"
               color="error"
-              onClick={() => handleDelete()}
+              onClick={() => handleDelete(row.id)}
             >
               <FontAwesomeIcon icon={faTrash} />
             </Button>
@@ -83,10 +102,78 @@ function CategoriaView() {
     },
   ];
 
-  const handleClickModal = () => {};
-    const handleEdit = () =>  {}
-    const handleDelete = () => {}
-    const handleDeactivate = () => {}
+  const excluirCategoria = async (id: string) => {
+    try {
+      setLoading(true);
+
+      const result = await api.delete(id);
+
+      if (result.success) showSuccess(result.message!);
+      else showError(result.message!);
+    } catch (error) {
+      console.error("Erro ao excluir categoria:", error);
+    } finally {
+      setLoading(false);
+      fetchData();
+    }
+  };
+
+  const addEditaCategoria = async (
+    categoria: UpdateCategoriaDto | CreateCategoriaDto,
+  ) => {
+    try {
+      setLoading(true);
+
+      if (categoria.nome.trim() === "") {
+        showError("Nome é obrigatório.");
+        return;
+      }
+
+      if (categoria.descricao.trim() === "") {
+        showError("Descrição é obrigatória.");
+        return;
+      }
+
+      const result =
+        categoria.id === empty_Guid
+          ? await api.create(categoria as CreateCategoriaDto)
+          : await api.update(categoria.id, categoria as UpdateCategoriaDto);
+
+      if (result.success) showSuccess(result.message!);
+      else showError(result.message!);
+    } catch (error: any) {
+      showError(
+        error?.response?.data?.detail ||
+          "Erro ao salvar alterações na categoria.",
+      );
+    } finally {
+      setLoading(false);
+      fetchData();
+    }
+  };
+
+  const handleClickModal = () => {
+    setCategoriaEdit(undefined);
+    setOpenModal(true);
+  };
+
+  const handleEdit = (categoria: CreateCategoriaDto | UpdateCategoriaDto) => {
+    setCategoriaEdit(categoria);
+    setOpenModal(true);
+  };
+  const handleDelete = (id: string) => {
+    setConfirmModal({ show: true, id });
+  };
+
+  const handleDeactivate = () => {};
+
+  const showSuccess = (message: string) => {
+    setModalSuccessError({ show: true, type: "success", message });
+  };
+
+  const showError = (message: string) => {
+    setModalSuccessError({ show: true, type: "error", message });
+  };
 
   return (
     <>
@@ -105,9 +192,37 @@ function CategoriaView() {
         )}
       </div>
       <ModalCriarEditarCategoria
-        show={true}
-        onSave={() => {}}
-        onClose={() => {}}
+        show={openModal}
+        categoria={categoriaEdit}
+        onSave={(categoria) => {
+          addEditaCategoria(categoria);
+        }}
+        onClose={() => {
+          setOpenModal(false);
+          setCategoriaEdit(undefined);
+        }}
+      />
+
+      <ModalSuccessError
+        show={modalSuccessError.show}
+        type={modalSuccessError.type}
+        message={modalSuccessError.message}
+        onClose={() =>
+          setModalSuccessError({ ...modalSuccessError, show: false })
+        }
+      />
+
+      <ModalConfirmarCancelar
+        show={confirmModal.show}
+        title="Confirmar exclusão"
+        message="Tem certeza que deseja excluir esta categoria  ?"
+        confirmText="Excluir"
+        cancelText="Cancelar"
+        onConfirm={() => {
+          excluirCategoria(confirmModal.id);
+          setConfirmModal({ ...confirmModal, show: false });
+        }}
+        onCancel={() => setConfirmModal({ ...confirmModal, show: false })}
       />
     </>
   );
