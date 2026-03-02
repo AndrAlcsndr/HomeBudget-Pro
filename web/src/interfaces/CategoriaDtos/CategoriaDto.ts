@@ -6,19 +6,19 @@ export class CategoriaDto {
   nome: string = "";
   descricao: string = "";
   finalidade: string = TipoCategoriaLabel[TipoCategoria.Despesa];
-  dataCriacaoModificacao: string = new Date().toISOString();
+  dataCriacao: string = new Date().toISOString();
 
   constructor(
     id: string = empty_Guid,
     nome: string = "",
     descricao: string = "",
     finalidade: string = TipoCategoriaLabel[TipoCategoria.Despesa],
-    dataCriacaoModificacao: string = new Date().toISOString(),
+    dataCriacao: string = new Date().toISOString(),
   ) {
     this.id = id;
     this.nome = nome;
     this.descricao = descricao;
     this.finalidade = finalidade;
-    this.dataCriacaoModificacao = dataCriacaoModificacao;
+    this.dataCriacao = dataCriacao;
   }
 }
