@@ -101,6 +101,17 @@ function PessoaView() {
     setModalSuccessError({ show: true, type: "error", message });
   };
 
+   const handleEdit = (pessoa: PessoaDto) => {
+    setPessoaEdit(pessoa);
+    setOpenModal(true);
+  };
+  const handleDelete = (id: string) => {
+    setConfirmModal({ show: true, id });
+  };
+
+  const handleDeactivate = (id: string) => {};
+
+
 
 
     const addEditarPessoas = async (
