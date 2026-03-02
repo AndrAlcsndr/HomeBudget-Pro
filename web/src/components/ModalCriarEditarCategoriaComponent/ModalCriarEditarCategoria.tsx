@@ -44,6 +44,27 @@ function ModalCriarEditarCategoria({
     }));
   }
 
+  function handleSubmit() {
+    if (!form.nome.trim()) {
+      alert("Nome é obrigatório.");
+      return;
+    }
+
+    if (!form.descricao.trim()) {
+      alert("Descrição é obrigatória.");
+      return;
+    }
+
+    if (form.descricao.trim().length > 400) {
+      alert("Descrição deve ter no máximo 400 caracteres.");
+      return;
+    }
+
+    onSave(form);
+    onClose();
+  }
+
+
 
   return (
     <Modal show={show} onHide={onClose} centered>
@@ -93,6 +114,16 @@ function ModalCriarEditarCategoria({
           </Form.Group>
         </Form>
       </Modal.Body>
+
+           <Modal.Footer>
+        <Button variant="secondary" onClick={onClose}>
+          Cancelar
+        </Button>
+        <Button variant="primary" onClick={handleSubmit}>
+          {isEdit ? "Salvar Alterações" : "Criar"}
+        </Button>
+      </Modal.Footer>
+
 
     </Modal>
   );
