@@ -9,14 +9,12 @@ export class CreateTransacaoDto {
   descricao: string;
   receitas: number;
   despesas: number;
-  saldo: number;
 
   constructor(
     tipo: TipoTransacao = TipoTransacao.Receita,
     descricao: string = '',
     receitas: number = 0.0,
     despesas: number = 0.0,
-    saldo: number = 0.0,
     idCategoria?: string,
     idPessoa?: string
   ) {
@@ -24,7 +22,6 @@ export class CreateTransacaoDto {
     this.descricao = descricao;
     this.receitas = receitas;
     this.despesas = despesas;
-    this.saldo = saldo;
     this.idCategoria = idCategoria;
     this.idPessoa = idPessoa;
   }
