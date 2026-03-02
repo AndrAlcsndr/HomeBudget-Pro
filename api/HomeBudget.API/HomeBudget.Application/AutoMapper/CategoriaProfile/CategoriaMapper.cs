@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HomeBudget.Application.DTOs.CategoriaDtos;
 using HomeBudget.Domain.Entities;
+using Microsoft.OpenApi;
 
 namespace HomeBudget.Application.AutoMapper.CategoriaProfile
 {
@@ -14,8 +15,11 @@ namespace HomeBudget.Application.AutoMapper.CategoriaProfile
             .ReverseMap()
             .ForMember(dest => dest.Transacoes, opt => opt.Ignore());
 
-            CreateMap<CreateCategoriaDto, Categoria>();
-            CreateMap<CategoriaDto, Categoria>();
+            CreateMap<CreateCategoriaDto, Categoria>().ReverseMap();
+
+            CreateMap<CategoriaDto, Categoria>(); CreateMap<Categoria, CategoriaDto>()
+                .ForMember(dest => dest.Finalidade,
+                opt => opt.MapFrom(src => src.Finalidade.ToString()));
 
             CreateMap<Categoria, UpdateCategoriaDto>()
               .ReverseMap();
