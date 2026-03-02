@@ -1,5 +1,6 @@
 using HomeBudget.Application.AutoMapper.CategoriaProfile;
 using HomeBudget.Application.AutoMapper.PessoaProfile;
+using HomeBudget.Application.AutoMapper.TransacaoProfile;
 using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.Interfaces;
 using HomeBudget.Application.Services;
@@ -20,6 +21,7 @@ builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<CategoriaProfile>();
     cfg.AddProfile<PessoaProfile>();
+    cfg.AddProfile<TransacaoProfile>();
 });
 
 builder.Services.AddCors(options =>
@@ -38,7 +40,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<IPessoaRepository<PagedRequest> ,PessoaRepository>();
 builder.Services.AddScoped<ICategoriaRepository<PagedRequest> ,CategoriaRepository>();
-builder.Services.AddScoped<ITransacaoRepository ,TransacaoRepository>();
+builder.Services.AddScoped<ITransacaoRepository<PagedRequest> ,TransacaoRepository>();
 
 // Services (App)
 builder.Services.AddScoped<IPessoaAppService, PessoaAppService>();
