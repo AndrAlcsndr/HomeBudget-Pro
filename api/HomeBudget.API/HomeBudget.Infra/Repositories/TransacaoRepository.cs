@@ -19,6 +19,9 @@ namespace HomeBudget.Infra.Repositories
 
         public async Task AddAsync(Transacao transacao)
         {
+            transacao.Id = new Guid();
+            transacao.DataCriacao = DateTime.UtcNow;
+
             await _context.Transacao.AddAsync(transacao);
             await _context.SaveChangesAsync();
         }
@@ -44,6 +47,7 @@ namespace HomeBudget.Infra.Repositories
             query = ApplySearchFilter(query, request.Search);
             query = ApplyTipoTransacaoFilter(query, (TipoTransacao)request.Tipo);
             query = ApplySorting(query, request.SortBy, request.SortDir == "asc");
+            query = ApplyGrouping(query, request.GroupBy);
 
             var total = await query.CountAsync();
 
@@ -69,6 +73,21 @@ namespace HomeBudget.Infra.Repositories
                 (d.Pessoa != null && EF.Functions.Like(d.Pessoa.Nome, like)) ||
                 (d.Categoria != null && EF.Functions.Like(d.Categoria.Nome, like)) ||
                 (d.Descricao != null && EF.Functions.Like(d.Descricao, like)));
+        }
+
+        private static IQueryable<Transacao> ApplyGrouping(IQueryable<Transacao> query, GroupByEnum groupBy)
+        {
+            return groupBy switch
+            {
+                GroupByEnum.Pessoa =>
+                    query.OrderBy(t => t.Pessoa!.Nome),
+
+                GroupByEnum.Categoria =>
+                    query.OrderBy(t => t.Categoria!.Nome),
+
+                GroupByEnum.Geral => query.OrderBy(t => t.DataCriacao),
+                _ => throw new NotImplementedException(),
+            };
         }
 
 
@@ -106,16 +125,18 @@ namespace HomeBudget.Infra.Repositories
                 : query;
         }
 
-        public void Remove(Transacao transacao)
+        public async Task DeleteAsync(Transacao transacao)
         {
             _context.Transacao.Remove(transacao);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(Transacao transacao)
+        public async Task UpdateAsync(Transacao transacao)
         {
+            transacao.DataModificacao = DateTime.UtcNow;
+
             _context.Transacao.Update(transacao);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
