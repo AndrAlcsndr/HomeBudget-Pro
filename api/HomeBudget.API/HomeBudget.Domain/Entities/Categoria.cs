@@ -14,7 +14,9 @@ namespace HomeBudget.Domain.Entities
         public DateTime DataCriacao { get; set; }
         public DateTime DataModificacao { get; set; }
 
-        public List<Transacao> Transacoes { get; set; } = [];
+        public readonly List<Transacao> _transacoes  = [];
+
+        public IReadOnlyCollection<Transacao> Transacoes => _transacoes;
 
     }
 }

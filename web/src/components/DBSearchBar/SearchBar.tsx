@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 function SearchBar() {
   return (
     <>
-      <div className="flex justify-between items-center  bg-gray-200 p-2 shadow-md w-full z-[9999]">
+      <div className="flex justify-between items-center  bg-gray-200 p-2 shadow-md w-full">
         {/* Exibição de data atual */}
         <h6 className="text-[#525256] font-semibold pt-2">
           {" "}

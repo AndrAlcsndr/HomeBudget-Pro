@@ -1,4 +1,5 @@
-﻿using HomeBudget.Application.DTOs.Pagination;
+﻿using HomeBudget.Application.DTOs;
+using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.DTOs.PessoaDtos;
 using HomeBudget.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -28,12 +29,12 @@ namespace HomeBudget.API.Controllers
             if (!result.Success)
                 return BadRequest(new ProblemDetails { Title = result.Title, Detail = result.Message });
 
-            return Ok(result.Data);
+            return Ok(result);
         }
 
         /// <summary>Obtem uma consulta paginada de todos as pessoas do sistema, e suas finanças</summary>
         [HttpGet("paged")]
-        [ProducesResponseType(typeof(PagedResult<FinancasPessoaFiltroDto>), 200)]
+        [ProducesResponseType(typeof(PagedResult<PessoaDto>), 200)]
         public async Task<IActionResult> GetPaged([FromQuery] PagedRequest request)
         {
             var result = await _service.GetPagedAsync(request);
@@ -47,6 +48,16 @@ namespace HomeBudget.API.Controllers
         public async Task<IActionResult> GetById(Guid Id)
         {
             var result = await _service.GetByIdAsync(Id);
+            return Ok(result);
+        }
+
+        /// <summary>Obtem todas as pessoas do sistema para seleção </summary>
+        [HttpGet("getAllForSelect")]
+        [ProducesResponseType(typeof(List<GenericOptionsDto>), 200)]
+        [ProducesResponseType(typeof(ProblemDetails), 404)]
+        public async Task<IActionResult> GetAllForSelect()
+        {
+            var result = await _service.GetAllForSelect();
             return Ok(result);
         }
 
@@ -70,7 +81,7 @@ namespace HomeBudget.API.Controllers
             if (!result.Success)
                 return BadRequest(new ProblemDetails { Title = result.Title, Detail = result.Message });
 
-            return Ok(result.Data);
+            return Ok(result);
         }
 
 

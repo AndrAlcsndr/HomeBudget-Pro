@@ -1,4 +1,5 @@
-﻿using HomeBudget.Application.DTOs.CategoriaDtos;
+﻿using HomeBudget.Application.DTOs;
+using HomeBudget.Application.DTOs.CategoriaDtos;
 using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ namespace HomeBudget.API.Controllers
             if (!result.Success)
                 return BadRequest(new ProblemDetails { Title = result.Title, Detail = result.Message });
 
-            return Ok(result.Data);
+            return Ok(result);
         }
 
         /// <summary>Obtem uma consulta paginada de todos as categorias do sistema </summary>
@@ -39,6 +40,16 @@ namespace HomeBudget.API.Controllers
         public async Task<IActionResult> GetPaged([FromQuery] PagedRequest request)
         {
             var result = await _service.GetPagedAsync(request);
+            return Ok(result);
+        }
+
+        /// <summary>Obtem uma consulta de todas as categorias do sistema para seleção </summary>
+        [HttpGet("getAllForSelect")]
+        [ProducesResponseType(typeof(PagedResult<List<GenericOptionsDto>>), 200)]
+        [ProducesResponseType(typeof(ProblemDetails), 404)]
+        public async Task<IActionResult> GetAllForSelect()
+        {
+            var result = await _service.GetAllForSelect();
             return Ok(result);
         }
 
@@ -62,7 +73,7 @@ namespace HomeBudget.API.Controllers
         }
 
         /// <summary>Realiza a atualização dos dados de uma determinada categoria, atraves de seu DTO </summary>
-        [HttpPut("")]
+        [HttpPut("{id:guid}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ProblemDetails), 400)]
         public async Task<IActionResult> Update([FromBody] UpdateCategoriaDto dto)
@@ -71,7 +82,7 @@ namespace HomeBudget.API.Controllers
             if (!result.Success)
                 return BadRequest(new ProblemDetails { Title = result.Title, Detail = result.Message });
 
-            return Ok(result.Data);
+            return Ok(result);
         }
 
     }

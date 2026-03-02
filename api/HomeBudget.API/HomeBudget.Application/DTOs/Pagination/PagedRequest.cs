@@ -1,4 +1,6 @@
-﻿namespace HomeBudget.Application.DTOs.Pagination
+﻿using HomeBudget.Domain.Enums;
+
+namespace HomeBudget.Application.DTOs.Pagination
 {
     public class PagedRequest
     {
@@ -7,6 +9,7 @@
         public string? Search { get; set; }
         public string? SortBy { get; set; }
         public string? SortDir { get; set; }
-        public int Status { get; set; } = -1;
+        public GroupByEnum GroupBy { get; set; } = GroupByEnum.Pessoa;
+        public int Tipo { get; set; } = -1;
     }
 }

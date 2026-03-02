@@ -9,8 +9,9 @@ namespace HomeBudget.Application.DTOs.CategoriaDtos
 
         public required string Nome { get; set; }
         public string? Descricao { get; set; }
+        public DateTime DataCriacao { get; set; }
 
-        public TipoCategoria Finalidade { get; set; }
+        public string Finalidade { get; set; }
 
 
     }

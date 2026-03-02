@@ -1,4 +1,6 @@
 using HomeBudget.Application.AutoMapper.CategoriaProfile;
+using HomeBudget.Application.AutoMapper.PessoaProfile;
+using HomeBudget.Application.AutoMapper.TransacaoProfile;
 using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.Interfaces;
 using HomeBudget.Application.Services;
@@ -18,12 +20,27 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<CategoriaProfile>();
+    cfg.AddProfile<PessoaProfile>();
+    cfg.AddProfile<TransacaoProfile>();
+});
+
+builder.Services.AddCors(options =>
+{
+    //Liberação dos endpoints para o frontend
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
 });
 
 
 builder.Services.AddScoped<IPessoaRepository<PagedRequest> ,PessoaRepository>();
 builder.Services.AddScoped<ICategoriaRepository<PagedRequest> ,CategoriaRepository>();
-builder.Services.AddScoped<ITransacaoRepository ,TransacaoRepository>();
+builder.Services.AddScoped<ITransacaoRepository<PagedRequest> ,TransacaoRepository>();
 
 // Services (App)
 builder.Services.AddScoped<IPessoaAppService, PessoaAppService>();
@@ -36,12 +53,6 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
-}
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -49,9 +60,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
 
-app.MapControllers(); 
+app.MapControllers();
 
 app.Run();

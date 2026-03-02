@@ -15,7 +15,7 @@ function LateralNavBar() {
   return (
     <>
     {/* Versão expandida do navBar lateral */}
-    <div className="d-flex">
+    <div className="d-flex z-[9999]">
       <div className="d-flex flex-column p-3 bg-[#191919] w-[250px] h-full text-white position-fixed">
         <div className="flex flex-center items-center just pb-4 ">
           <h4 className="">HomeBudget</h4>

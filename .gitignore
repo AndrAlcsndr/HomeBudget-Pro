@@ -52,3 +52,6 @@ appsettings.Development.json
 Thumbs.db
 /HomeBudget.Api/HomeBudget.Api.csproj.Backup.tmp
 /HomeBudget.Api/HomeBudget.Api.sln
+api/HomeBudget.API/HomeBudget.Infra/Migrations/20260301215253_InitialCreate.cs
+api/HomeBudget.API/HomeBudget.Infra/Migrations/20260301215253_InitialCreate.Designer.cs
+api/HomeBudget.API/HomeBudget.Infra/Migrations/AppDbContextModelSnapshot.cs

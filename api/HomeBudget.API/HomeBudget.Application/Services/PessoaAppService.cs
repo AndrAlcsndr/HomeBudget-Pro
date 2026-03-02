@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using HomeBudget.Application.Common;
+using HomeBudget.Application.DTOs;
 using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.DTOs.PessoaDtos;
 using HomeBudget.Application.Interfaces;
+using HomeBudget.Application.Validators;
 using HomeBudget.Domain.Entities;
 using HomeBudget.Domain.Interfaces;
 
@@ -21,14 +23,12 @@ namespace HomeBudget.Application.Services
 
         public async Task<PagedResult<PessoaDto>> GetPagedAsync(PagedRequest request)
         {
-            // var (items, total) = await _repository.GetPagedAsync(request);
-
-            //var mappedItems = _mapper.Map<List<PessoaDto>>(items);
+            var (items, total) = await _repository.GetPagedAsync(request);
 
             return new PagedResult<PessoaDto>
             {
-                Resultados = [],
-                Total = 0,
+                Items = _mapper.Map<List<PessoaDto>>(items),
+                Total = total,
                 Page = request.Page,
                 PageSize = request.PageSize
             };
@@ -71,6 +71,18 @@ namespace HomeBudget.Application.Services
             var dto = _mapper.Map<PessoaDto>(pessoa);
 
             return OperationResult<PessoaDto>.Ok(dto);
+        }
+
+        public async Task<OperationResult<List<GenericOptionsDto>>> GetAllForSelect()
+        {
+            var pessoas = await _repository.GetAllForSelect();
+
+            if (pessoas == null || pessoas.Count == 0)
+                return OperationResult<List<GenericOptionsDto>>.Fail("Sem registros de pessoa para exibir.");
+
+            var dtos = _mapper.Map<List<GenericOptionsDto>>(pessoas);
+
+            return OperationResult<List<GenericOptionsDto>>.Ok(dtos);
         }
 
         public async Task<OperationResult<bool>> DeleteAsync(Guid id)
@@ -117,7 +129,16 @@ namespace HomeBudget.Application.Services
             if (string.IsNullOrWhiteSpace(dto.Nome))
                 return (false, OperationResult<bool>.Fail("Nome é obrigatório."));
 
+            if (string.IsNullOrWhiteSpace(dto.Cpf))
+                return (false, OperationResult<bool>.Fail("CPF é obrigatório."));
+
+            if (!CpfValidator.IsValid(dto.Cpf))
+                return (false, OperationResult<bool>.Fail("CPF Inválido."));
+
             if (await _repository.PessoaExistente(dto.Nome, dto.Id))
+                return (flowControl: false, value: OperationResult<bool>.Fail("Outro cadastro já possui este nome."));
+
+            if (await _repository.CpfExistente(dto.Cpf, dto.Id))
                 return (flowControl: false, value: OperationResult<bool>.Fail("Outro cadastro já possui este nome."));
 
             if (dto.Nome.Length > 200)

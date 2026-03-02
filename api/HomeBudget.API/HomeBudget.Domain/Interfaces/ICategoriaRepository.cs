@@ -8,6 +8,7 @@ namespace HomeBudget.Domain.Interfaces
         Task UpdateAsync(Categoria categoria);
         Task DeleteAsync(Categoria categoria);
         Task<Categoria?> GetByIdAsync(Guid id);
+        Task<List<Categoria>> GetAllForSelect();
         Task<(IReadOnlyList<Categoria> Items, int Total)> GetPagedAsync(T request);
         Task<bool> CategoriaExistente(string nome, Guid idCategoria);
     }
