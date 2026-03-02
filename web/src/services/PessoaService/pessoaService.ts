@@ -6,6 +6,7 @@ import type { OperationResult } from '../../interfaces/Operation/OperationResult
 import type { UpdatePessoaDto } from '../../interfaces/PessoaDtos/UpdatePessoaDto'
 import type { OperationRequest } from '../../interfaces/Operation/OperationRequest'
 import type { PagedResult } from '../../interfaces/Operation/PagedResultDto'
+import type { genericOptionsDto } from '../../interfaces/genericOptionsDto'
 
 
 export class ApiPessoaService {
@@ -25,6 +26,15 @@ export class ApiPessoaService {
     const response = await this.api.get<PagedResult<PessoaDto>>(
       `${this.baseUrl}/paged`,
       { params: request }
+    )
+    return response.data
+  }
+
+  
+  // getAllForSelect
+  async getAll(): Promise<OperationResult<genericOptionsDto[]>> {
+    const response = await this.api.get<OperationResult<genericOptionsDto[]>>(
+      `${this.baseUrl}/getAllForSelect`,
     )
     return response.data
   }

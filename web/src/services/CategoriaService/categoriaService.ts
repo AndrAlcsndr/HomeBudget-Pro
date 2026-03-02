@@ -6,6 +6,7 @@ import type { CreateCategoriaDto } from '../../interfaces/CategoriaDtos/CreateCa
 import type { UpdateCategoriaDto } from '../../interfaces/CategoriaDtos/UpdateCategoriaDto'
 import type { PagedResult } from '../../interfaces/Operation/PagedResultDto'
 import type { OperationResult } from '../../interfaces/Operation/OperationResult'
+import type { genericOptionsDto } from '../../interfaces/genericOptionsDto'
 
 
 export class ApiCategoriaService {
@@ -29,6 +30,14 @@ export class ApiCategoriaService {
 
     return response.data
   }
+
+  // getAllForSelect
+    async getAll(): Promise<OperationResult<genericOptionsDto[]>> {
+      const response = await this.api.get<OperationResult<genericOptionsDto[]>>(
+        `${this.baseUrl}/getAllForSelect`,
+      )
+      return response.data
+    }
 
   // GetById
   async getById(id: string): Promise<OperationResult<CategoriaDto>> {
