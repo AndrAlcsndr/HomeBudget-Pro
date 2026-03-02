@@ -14,7 +14,7 @@ namespace HomeBudget.Application.Services
 
             return new PagedResult<TransacaoDto>
             {
-                Resultados = [],
+                Items = [],
                 Total = 0,
                 Page = request.Page,
                 PageSize = request.PageSize

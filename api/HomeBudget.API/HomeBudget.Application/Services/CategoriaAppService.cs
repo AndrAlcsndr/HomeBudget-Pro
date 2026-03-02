@@ -26,7 +26,7 @@ namespace HomeBudget.Application.Services
 
             return new PagedResult<CategoriaDto>
             {
-                Resultados = _mapper.Map<List<CategoriaDto>>(items),
+                Items = _mapper.Map<List<CategoriaDto>>(items),
                 Total = 0,
                 Page = request.Page,
                 PageSize = request.PageSize

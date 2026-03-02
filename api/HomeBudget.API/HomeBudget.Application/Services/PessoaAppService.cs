@@ -3,6 +3,7 @@ using HomeBudget.Application.Common;
 using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.DTOs.PessoaDtos;
 using HomeBudget.Application.Interfaces;
+using HomeBudget.Application.Validators;
 using HomeBudget.Domain.Entities;
 using HomeBudget.Domain.Interfaces;
 
@@ -27,8 +28,8 @@ namespace HomeBudget.Application.Services
 
             return new PagedResult<PessoaDto>
             {
-                Resultados = [],
-                Total = 0,
+                Items = _mapper.Map<List<PessoaDto>>(items),
+                Total = total,
                 Page = request.Page,
                 PageSize = request.PageSize
             };
