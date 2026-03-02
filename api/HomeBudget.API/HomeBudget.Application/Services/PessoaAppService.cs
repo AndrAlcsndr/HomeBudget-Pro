@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HomeBudget.Application.Common;
+using HomeBudget.Application.DTOs;
 using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.DTOs.PessoaDtos;
 using HomeBudget.Application.Interfaces;
@@ -70,6 +71,18 @@ namespace HomeBudget.Application.Services
             var dto = _mapper.Map<PessoaDto>(pessoa);
 
             return OperationResult<PessoaDto>.Ok(dto);
+        }
+
+        public async Task<OperationResult<List<GenericOptionsDto>>> GetAllForSelect()
+        {
+            var pessoas = await _repository.GetAllForSelect();
+
+            if (pessoas == null || pessoas.Count == 0)
+                return OperationResult<List<GenericOptionsDto>>.Fail("Sem registros de pessoa para exibir.");
+
+            var dtos = _mapper.Map<List<GenericOptionsDto>>(pessoas);
+
+            return OperationResult<List<GenericOptionsDto>>.Ok(dtos);
         }
 
         public async Task<OperationResult<bool>> DeleteAsync(Guid id)

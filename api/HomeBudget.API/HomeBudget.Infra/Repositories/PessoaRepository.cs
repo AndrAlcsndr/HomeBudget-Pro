@@ -53,6 +53,13 @@ namespace HomeBudget.Infra.Repositories
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
+        public async Task<List<Pessoa>> GetAllForSelect()
+        {
+            return await _context.Pessoa
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task UpdateAsync(Pessoa pessoa)
         {
             pessoa.DataModificacao = DateTime.UtcNow;

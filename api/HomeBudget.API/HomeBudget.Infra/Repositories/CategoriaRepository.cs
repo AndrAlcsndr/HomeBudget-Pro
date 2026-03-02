@@ -5,6 +5,7 @@ using HomeBudget.Domain.Enums;
 using HomeBudget.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Net.NetworkInformation;
+using System.Text.RegularExpressions;
 
 namespace HomeBudget.Infra.Repositories
 {
@@ -73,7 +74,7 @@ namespace HomeBudget.Infra.Repositories
             query = ApplySearchFilter(query, request.Search);
             query = ApplyTipoCategoriaFilter(query, (TipoCategoria)request.Tipo);
             query = ApplySorting(query, request.SortBy, request.SortDir == "asc");
-
+           
             var total = await query.CountAsync();
 
             var items = await query
@@ -81,7 +82,16 @@ namespace HomeBudget.Infra.Repositories
                 .Take(safeSize)
                 .ToListAsync();
 
+
+
             return (items, total);
+        }
+
+        public async Task<List<Categoria>> GetAllForSelect()
+        {
+            return await _context.Categoria
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         private static IQueryable<Categoria> ApplySearchFilter(
@@ -128,6 +138,8 @@ namespace HomeBudget.Infra.Repositories
             };
         }
 
+       
+
         private static IQueryable<Categoria> ApplyTipoCategoriaFilter(
             IQueryable<Categoria> query,
             TipoCategoria? tipoCategoria)
@@ -137,7 +149,6 @@ namespace HomeBudget.Infra.Repositories
                 ? query.Where(e => e.Finalidade == tipoCategoria)
                 : query;
         }
-
 
     }
 }

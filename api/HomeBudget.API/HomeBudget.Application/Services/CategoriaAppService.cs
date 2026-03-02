@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HomeBudget.Application.Common;
+using HomeBudget.Application.DTOs;
 using HomeBudget.Application.DTOs.CategoriaDtos;
 using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.Interfaces;
@@ -31,6 +32,18 @@ namespace HomeBudget.Application.Services
                 Page = request.Page,
                 PageSize = request.PageSize
             };
+        }
+
+        public async Task<OperationResult<List<GenericOptionsDto>>> GetAllForSelect()
+        {
+            var categorias = await _repository.GetAllForSelect();
+
+            if (categorias == null || categorias.Count == 0)
+                return OperationResult<List<GenericOptionsDto>>.Fail("Sem registros de categoria para exibir.");
+
+            var dtos = _mapper.Map<List<GenericOptionsDto>>(categorias);
+
+            return OperationResult<List<GenericOptionsDto>>.Ok(dtos);
         }
 
         public async Task<OperationResult<Guid>> CreateAsync(CreateCategoriaDto dto)
