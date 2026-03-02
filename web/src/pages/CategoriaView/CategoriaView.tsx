@@ -79,6 +79,11 @@ function CategoriaView() {
     },
   ];
 
+  const handleClickModal = () => {};
+    const handleEdit = (categoria: CategoriaDto) =>  {}
+    const handleDelete = (id: string) => {}
+    const handleDeactivate = (id: string) => {}
+
   return (
     <>
       <div className="mb-10 space-y-4">
