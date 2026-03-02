@@ -5,6 +5,7 @@ import type { CategoriaDto } from '../../interfaces/CategoriaDtos/CategoriaDto'
 import type { CreateCategoriaDto } from '../../interfaces/CategoriaDtos/CreateCategoriaDto'
 import type { UpdateCategoriaDto } from '../../interfaces/CategoriaDtos/UpdateCategoriaDto'
 import type { PagedResult } from '../../interfaces/Operation/PagedResultDto'
+import type { OperationResult } from '../../interfaces/Operation/OperationResult'
 
 
 export class ApiCategoriaService {
@@ -14,8 +15,8 @@ export class ApiCategoriaService {
 })
 
   // Create
-  async create(request: CreateCategoriaDto): Promise<CategoriaDto> {
-    const response = await this.api.post<CategoriaDto>(this.baseUrl, request)
+  async create(request: CreateCategoriaDto): Promise<OperationResult<CategoriaDto>> {
+    const response = await this.api.post<OperationResult<CategoriaDto>>(this.baseUrl, request)
     return response.data
   }
 
@@ -30,20 +31,20 @@ export class ApiCategoriaService {
   }
 
   // GetById
-  async getById(id: string): Promise<CategoriaDto> {
-    const response = await this.api.get<CategoriaDto>(`${this.baseUrl}/${id}`)
+  async getById(id: string): Promise<OperationResult<CategoriaDto>> {
+    const response = await this.api.get<OperationResult<CategoriaDto>>(`${this.baseUrl}/${id}`)
     return response.data
   }
 
   // Update
-  async update(id: string, request: UpdateCategoriaDto): Promise<CategoriaDto> {
-    const response = await this.api.put<CategoriaDto>(`${this.baseUrl}/${id}`, request)
+  async update(id: string, request: UpdateCategoriaDto): Promise<OperationResult<boolean>> {
+    const response = await this.api.put<OperationResult<boolean>>(`${this.baseUrl}/${id}`, request)
     return response.data
   }
 
   // Delete
-  async delete(id: string): Promise<boolean> {
-    const response = await this.api.delete<boolean>(`${this.baseUrl}/${id}`)
+  async delete(id: string): Promise<OperationResult<boolean>> {
+    const response = await this.api.delete<OperationResult<boolean>>(`${this.baseUrl}/${id}`)
     return response.data
   }
 }
