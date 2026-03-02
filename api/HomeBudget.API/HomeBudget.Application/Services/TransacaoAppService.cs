@@ -26,8 +26,6 @@ namespace HomeBudget.Application.Services
         {
             var (items, total) = await _repository.GetPagedAsync(request);
 
-            var dtos = _mapper.Map<IEnumerable<TransacaoDto>>(items);
-
             return new PagedResult<TransacaoDto>
             {
                 Items = _mapper.Map<List<TransacaoDto>>(items),
