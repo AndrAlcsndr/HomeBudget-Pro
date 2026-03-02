@@ -64,19 +64,15 @@ function ModalCriarEditarCategoria({
     onClose();
   }
 
-
-
   return (
     <Modal show={show} onHide={onClose} centered>
-
       <Modal.Header closeButton>
         <Modal.Title>
           {isEdit ? "Editar Categoria" : "Criar Categoria"}
         </Modal.Title>
       </Modal.Header>
 
-
- <Modal.Body>
+      <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>Nome</Form.Label>
@@ -115,7 +111,7 @@ function ModalCriarEditarCategoria({
         </Form>
       </Modal.Body>
 
-           <Modal.Footer>
+      <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
           Cancelar
         </Button>
@@ -123,8 +119,6 @@ function ModalCriarEditarCategoria({
           {isEdit ? "Salvar Alterações" : "Criar"}
         </Button>
       </Modal.Footer>
-
-
     </Modal>
   );
 }
