@@ -5,10 +5,10 @@ namespace HomeBudget.Application.DTOs.TransacaoDtos
     public class TransacaoDto
     {
         public Guid Id { get; set; }
-        public string Categoria { get; set; }
-        public string Pessoa { get; set; }
+        public string? Categoria { get; set; }
+        public string? Pessoa { get; set; }
 
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
 
         public TipoTransacao Tipo { get; set; }
 
