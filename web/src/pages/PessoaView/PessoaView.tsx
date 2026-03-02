@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 import { ApiPessoaService } from "../../services/PessoaService/pessoaService";
 import { Button } from "react-bootstrap";
-
-import type { CreatePessoaDto } from "../../interfaces/PessoaDtos/CreatePessoaDto";
-import type { UpdatePessoaDto } from "../../interfaces/PessoaDtos/UpdatePessoaDto";
-
-import DataListComponent from "../../components/DataGridComponent/DataGridComponent";
-import SkeletonComponent from "../../components/SkeletonComponent/SkeletonComponent";
-import ModalCriarEditarPessoa from "../../components/ModalCriarEditarPessoalComponent/ModalCriarEditarPessoa";
-import ModalSuccessError from "../../components/ModalSuccessErrorComponent/ModalSuccessErrorComponent";
 import { empty_Guid } from "../../utils/guid";
 import { isValidCpf, maskCPF, onlyDigits } from "../../utils/cpfValidator";
-import type { PessoaDto } from "../../interfaces/PessoaDtos/PessoaDto";
 import { formatDate } from "../../utils/formatDate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
   faTrash,
   faUserSlash,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import type { CreatePessoaDto } from "../../interfaces/PessoaDtos/CreatePessoaDto";
+import type { UpdatePessoaDto } from "../../interfaces/PessoaDtos/UpdatePessoaDto";
+import type { PessoaDto } from "../../interfaces/PessoaDtos/PessoaDto";
+
 import ModalConfirmarCancelar from "../../components/ModalConfirmarCancelarComponent/ModalConfirmarCancelarComponent";
+import DataListComponent from "../../components/DataGridComponent/DataGridComponent";
+import SkeletonComponent from "../../components/SkeletonComponent/SkeletonComponent";
+import ModalCriarEditarPessoa from "../../components/ModalCriarEditarPessoalComponent/ModalCriarEditarPessoa";
+import ModalSuccessError from "../../components/ModalSuccessErrorComponent/ModalSuccessErrorComponent";
 
 function PessoaView() {
   const api = new ApiPessoaService();
