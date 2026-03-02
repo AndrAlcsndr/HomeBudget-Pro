@@ -1,57 +1,93 @@
-﻿using HomeBudget.Application.Common;
+﻿using AutoMapper;
+using HomeBudget.Application.Common;
 using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.DTOs.TransacaoDtos;
 using HomeBudget.Application.Interfaces;
+using HomeBudget.Domain.Entities;
+using HomeBudget.Domain.Interfaces;
 
 namespace HomeBudget.Application.Services
 {
     public class TransacaoAppService : ITransacaoAppService
     {
+        private readonly ITransacaoRepository<PagedRequest> _repository;
+        private readonly IMapper _mapper;
+
+        public TransacaoAppService(
+            ITransacaoRepository<PagedRequest> repository,
+            IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
 
         public async Task<PagedResult<TransacaoDto>> GetPagedAsync(PagedRequest request)
         {
-            //var (items, total) = await _repository.GetPagedAsync(request);
+            var (items, total) = await _repository.GetPagedAsync(request);
+
+            var dtos = _mapper.Map<IEnumerable<TransacaoDto>>(items);
 
             return new PagedResult<TransacaoDto>
             {
-                Items = [],
-                Total = 0,
+                Items = _mapper.Map<List<TransacaoDto>>(items),
+                Total = total,
                 Page = request.Page,
                 PageSize = request.PageSize
             };
         }
 
-        public Task<OperationResult<Guid>> CreateAsync(CreateTransacaoDto dto)
+        public async Task<OperationResult<Guid>> CreateAsync(CreateTransacaoDto dto)
         {
-            return Task.FromResult(
-               OperationResult<Guid>.Fail(string.Empty)
-               );
+            try
+            {
+                var entity = _mapper.Map<Transacao>(dto);
+
+                await _repository.AddAsync(entity);
+
+                return OperationResult<Guid>.Ok(entity.Id);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<Guid>.Fail($"Erro ao criar transação: {ex.Message}");
+            }
         }
 
-        public Task<OperationResult<TransacaoDto>> GetByIdAsync(Guid id)
+        public async Task<OperationResult<TransacaoDto>> GetByIdAsync(Guid id)
         {
-            //return _repository.GetByIdAsync(id);
+            var entity = await _repository.GetByIdAsync(id);
 
-            return Task.FromResult(
-                OperationResult<TransacaoDto>.Fail(string.Empty)
-                );
+            if (entity == null)
+                return OperationResult<TransacaoDto>.Fail("Transação não encontrada.");
+
+            var dto = _mapper.Map<TransacaoDto>(entity);
+
+            return OperationResult<TransacaoDto>.Ok(dto);
         }
 
-        public Task<OperationResult<bool>> DeleteAsync(Guid id)
+        public async Task<OperationResult<bool>> DeleteAsync(Guid id)
         {
-            //return _repository.DeleteAsync(id);
-            return Task.FromResult(
-                OperationResult<bool>.Fail(string.Empty)
-                );
-        }
-        public Task<OperationResult<bool>> UpdateAsync(UpdateTransacaoDto dto)
-        {
-            // return _repository.UpdateAsync(dto);
-            return Task.FromResult(
-                OperationResult<bool>.Fail(string.Empty)
-                );
+            var entity = await _repository.GetByIdAsync(id);
+
+            if (entity == null)
+                return OperationResult<bool>.Fail("Transação não encontrada.");
+
+            _repository.Remove(entity);
+
+            return OperationResult<bool>.Ok(true);
         }
 
+        public async Task<OperationResult<bool>> UpdateAsync(UpdateTransacaoDto dto)
+        {
+            var entity = await _repository.GetByIdAsync(dto.Id);
 
+            if (entity == null)
+                return OperationResult<bool>.Fail("Transação não encontrada.");
+
+            _mapper.Map(dto, entity);
+
+            _repository.Update(entity);
+
+            return OperationResult<bool>.Ok(true);
+        }
     }
 }
