@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 import { empty_Guid } from "../../utils/guid";
+import { CreateTransacaoDto } from "../../interfaces/TransacaoDtos/CreateTransacaoDto";
+import type { genericOptionsDto } from "../../interfaces/genericOptionsDto";
+import { TipoTransacao } from "../../enums/TipoTransacaoEnum";
 
 interface Props {
   show: boolean;
   transacao?: CreateTransacaoDto;
+  pessoas: genericOptionsDto[];
+  categorias: genericOptionsDto[];
   onSave: (transacao: CreateTransacaoDto) => void;
   onClose: () => void;
 }
@@ -49,7 +55,7 @@ function ModalCriarEditarTransacoes({
     >,
   ) {
     const { name, value } = e.target;
-  
+
     setForm((prev) => ({
     ...prev,
     [name]:
@@ -113,7 +119,7 @@ function ModalCriarEditarTransacoes({
               ))}
             </Form.Select>
           </Form.Group>
-     
+
           {/* Categoria */}
           <Form.Group className="mb-3">
             <Form.Label>Categoria</Form.Label>
