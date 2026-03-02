@@ -28,7 +28,7 @@ function PessoaView() {
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [pessoaEdit, setPessoaEdit] = useState<PessoaDto>();
-     const [modalSuccessError, setModalSuccessError] = useState({
+  const [modalSuccessError, setModalSuccessError] = useState({
     show: false,
     type: "success" as "success" | "error",
     message: "",
@@ -38,7 +38,7 @@ function PessoaView() {
     id: "",
   });
 
-   const columns = [
+  const columns = [
     { field: "nome", headerName: "Nome", width: 150 },
     { field: "idade", headerName: "Idade", width: 110 },
     {
@@ -96,8 +96,7 @@ function PessoaView() {
     },
   ];
 
-
-   const showSuccess = (message: string) => {
+  const showSuccess = (message: string) => {
     setModalSuccessError({ show: true, type: "success", message });
   };
 
@@ -105,7 +104,7 @@ function PessoaView() {
     setModalSuccessError({ show: true, type: "error", message });
   };
 
-   const handleEdit = (pessoa: PessoaDto) => {
+  const handleEdit = (pessoa: PessoaDto) => {
     setPessoaEdit(pessoa);
     setOpenModal(true);
   };
@@ -115,10 +114,7 @@ function PessoaView() {
 
   const handleDeactivate = (id: string) => {};
 
-
-
-
-    const addEditarPessoas = async (
+  const addEditarPessoas = async (
     pessoa: CreatePessoaDto | UpdatePessoaDto,
   ) => {
     try {
@@ -143,31 +139,32 @@ function PessoaView() {
       if (result.success) showSuccess(result.message!);
       else showError(result.message!);
     } catch (error: any) {
-      showError(error?.response?.data?.detail || 'Erro ao salvar alterações na pessoa.');
+      showError(
+        error?.response?.data?.detail || "Erro ao salvar alterações na pessoa.",
+      );
     } finally {
       setLoading(false);
       fetchData();
     }
   };
 
-
   const fetchData = async () => {
-      setLoading(true);
-      try {
-        const result = await api.getPaged({
-          page: 1,
-          pageSize: 10,
-        });
+    setLoading(true);
+    try {
+      const result = await api.getPaged({
+        page: 1,
+        pageSize: 10,
+      });
 
-        setRows([...(result.items ?? [])]);
-      } catch (error) {
-        console.error("Erro ao buscar pessoas:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+      setRows([...(result.items ?? [])]);
+    } catch (error) {
+      console.error("Erro ao buscar pessoas:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const excluirPessoa = async (id: string) => {
+  const excluirPessoa = async (id: string) => {
     try {
       setLoading(true);
 
@@ -182,7 +179,6 @@ function PessoaView() {
       fetchData();
     }
   };
-
 
   useEffect(() => {
     fetchData();
@@ -217,25 +213,27 @@ function PessoaView() {
         }}
       />
 
-       <ModalSuccessError
+      <ModalSuccessError
         show={modalSuccessError.show}
         type={modalSuccessError.type}
         message={modalSuccessError.message}
-        onClose={() => setModalSuccessError({ ...modalSuccessError, show: false })}
+        onClose={() =>
+          setModalSuccessError({ ...modalSuccessError, show: false })
+        }
       />
 
-       <ModalConfirmarCancelar
+      <ModalConfirmarCancelar
         show={confirmModal.show}
         title="Confirmar exclusão"
         message="Tem certeza que deseja excluir esta pessoa?"
         confirmText="Excluir"
         cancelText="Cancelar"
-        onConfirm={() => { excluirPessoa(confirmModal.id); setConfirmModal({ ...confirmModal, show: false }); }}
+        onConfirm={() => {
+          excluirPessoa(confirmModal.id);
+          setConfirmModal({ ...confirmModal, show: false });
+        }}
         onCancel={() => setConfirmModal({ ...confirmModal, show: false })}
       />
-
-
-
     </>
   );
 }
