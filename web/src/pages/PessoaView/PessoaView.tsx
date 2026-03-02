@@ -25,8 +25,23 @@ import ModalConfirmarCancelar from "../../components/ModalConfirmarCancelarCompo
 function PessoaView() {
   const api = new ApiPessoaService();
   const [rows, setRows] = useState<PessoaDto[]>([]);
+  const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [pessoaEdit, setPessoaEdit] = useState<PessoaDto>();
+     const [modalSuccessError, setModalSuccessError] = useState({
+    show: false,
+    type: "success" as "success" | "error",
+    message: "",
+  });
+
+   const showSuccess = (message: string) => {
+    setModalSuccessError({ show: true, type: "success", message });
+  };
+
+  const showError = (message: string) => {
+    setModalSuccessError({ show: true, type: "error", message });
+  };
+
 
 
     const addEditarPessoas = async (
@@ -110,6 +125,14 @@ function PessoaView() {
           setPessoaEdit(undefined);
         }}
       />
+
+       <ModalSuccessError
+        show={modalSuccessError.show}
+        type={modalSuccessError.type}
+        message={modalSuccessError.message}
+        onClose={() => setModalSuccessError({ ...modalSuccessError, show: false })}
+      />
+
 
     </>
   );
