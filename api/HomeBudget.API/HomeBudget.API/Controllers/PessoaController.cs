@@ -28,12 +28,12 @@ namespace HomeBudget.API.Controllers
             if (!result.Success)
                 return BadRequest(new ProblemDetails { Title = result.Title, Detail = result.Message });
 
-            return Ok(result.Data);
+            return Ok(result);
         }
 
         /// <summary>Obtem uma consulta paginada de todos as pessoas do sistema, e suas finanças</summary>
         [HttpGet("paged")]
-        [ProducesResponseType(typeof(PagedResult<FinancasPessoaFiltroDto>), 200)]
+        [ProducesResponseType(typeof(PagedResult<PessoaDto>), 200)]
         public async Task<IActionResult> GetPaged([FromQuery] PagedRequest request)
         {
             var result = await _service.GetPagedAsync(request);
@@ -70,7 +70,7 @@ namespace HomeBudget.API.Controllers
             if (!result.Success)
                 return BadRequest(new ProblemDetails { Title = result.Title, Detail = result.Message });
 
-            return Ok(result.Data);
+            return Ok(result);
         }
 
 
