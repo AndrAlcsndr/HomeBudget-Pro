@@ -71,7 +71,7 @@ namespace HomeBudget.Infra.Repositories
                 .AsNoTracking();
 
             query = ApplySearchFilter(query, request.Search);
-            query = ApplyTipoCorrespondenciaFilter(query, (TipoCategoria)request.Tipo);
+            query = ApplyTipoCategoriaFilter(query, (TipoCategoria)request.Tipo);
             query = ApplySorting(query, request.SortBy, request.SortDir == "asc");
 
             var total = await query.CountAsync();
@@ -128,7 +128,7 @@ namespace HomeBudget.Infra.Repositories
             };
         }
 
-        private static IQueryable<Categoria> ApplyTipoCorrespondenciaFilter(
+        private static IQueryable<Categoria> ApplyTipoCategoriaFilter(
             IQueryable<Categoria> query,
             TipoCategoria? tipoCategoria)
         {
