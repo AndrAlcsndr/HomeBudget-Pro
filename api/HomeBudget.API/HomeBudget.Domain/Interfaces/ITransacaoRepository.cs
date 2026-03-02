@@ -10,8 +10,7 @@ namespace HomeBudget.Domain.Interfaces
 
         Task AddAsync(Transacao transacao);
 
-        void Update(Transacao transacao);
-
-        void Remove(Transacao transacao);
+        Task UpdateAsync(Transacao transacao);
+        Task DeleteAsync(Transacao transacao);
     }
 }

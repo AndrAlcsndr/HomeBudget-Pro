@@ -10,6 +10,7 @@ namespace HomeBudget.Domain.Interfaces
         Task<Pessoa?> GetByIdAsync(Guid id);
         Task<bool> PessoaExistente(string nome, Guid idPessoa);
         Task<bool> CpfExistente(string cpf, Guid idPessoa);
+        Task<List<Pessoa>> GetAllForSelect();
 
         Task<(IReadOnlyList<Pessoa> Items, int Total)> GetPagedAsync(T request);
     }
