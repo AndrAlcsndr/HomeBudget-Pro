@@ -180,26 +180,75 @@ function TransacaoView() {
 
   return (
     <>
+      <div className="flex items-center justify-between mb-3">
       <Tabs
       id="controlled-tab-example"
       activeKey={key}
       onSelect={(k) => setKey(k!)}
-      className="mb-3"
+          className="mb-0"
     >
-      <Tab eventKey="pessoa" title="Gastos p/ pessoa">
-        <TransacaoPessoaView />
-      </Tab>
-      <Tab eventKey="categoria" title="Gastos p/ categoria">
-        <TransacaoCategoriaView />
-      </Tab>
-      <Tab eventKey="geral" title="Gastos gerais">
-         <TransacaoGeralView />
-      </Tab>
+          <Tab eventKey="pessoa" title="Gastos p/ pessoa" />
+          <Tab eventKey="categoria" title="Gastos p/ categoria" />
+          <Tab eventKey="geral" title="Gastos gerais" />
     </Tabs>
 
-    <ModalCriarEditarTransacoes />
-    <ModalConfirmarCancelar />
-    <ModalSuccessError />
+        <Button variant="primary" onClick={() => setOpenModalEdit(true)}>
+          + Novo
+        </Button>
+      </div>
+
+      {/* Conteúdo das tabs separado */}
+      {key === "pessoa" && (
+        <TransacaoPessoaView loading={loading} rows={rows} columns={columns} />
+      )}
+
+      {key === "categoria" && (
+        <TransacaoCategoriaView
+          loading={loading}
+          rows={rows}
+          columns={columns}
+        />
+      )}
+
+      {key === "geral" && (
+        <TransacaoGeralView loading={loading} rows={rows} columns={columns} />
+      )}
+
+      <ModalCriarEditarTransacoes
+        show={openModalEdit}
+        pessoas={pessoasSelect}
+        categorias={categoriasSelect}
+        transacao={transacaoEdit}
+        onSave={(transacao) => {
+          addEditTransacao(transacao);
+        }}
+        onClose={() => {
+          setOpenModalEdit(false);
+          setTransacaoEdit(undefined);
+        }}
+      />
+
+      <ModalSuccessError
+        show={modalSuccessError.show}
+        type={modalSuccessError.type}
+        message={modalSuccessError.message}
+        onClose={() =>
+          setModalSuccessError({ ...modalSuccessError, show: false })
+        }
+      />
+
+      <ModalConfirmarCancelar
+        show={confirmModal.show}
+        title="Confirmar exclusão"
+        message="Tem certeza que deseja excluir esta transação  ?"
+        confirmText="Excluir"
+        cancelText="Cancelar"
+        onConfirm={() => {
+          excluirTransacao(confirmModal.id);
+          setConfirmModal({ ...confirmModal, show: false });
+        }}
+        onCancel={() => setConfirmModal({ ...confirmModal, show: false })}
+      />
     </>
   );
 }
