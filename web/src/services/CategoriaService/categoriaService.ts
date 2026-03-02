@@ -5,6 +5,7 @@ import type { OperationRequest } from '../../interfaces/Operation/OperationReque
 import type { CategoriaDto } from '../../interfaces/CategoriaDtos/CategoriaDto'
 import type { CreateCategoriaDto } from '../../interfaces/CategoriaDtos/CreateCategoriaDto'
 import type { UpdateCategoriaDto } from '../../interfaces/CategoriaDtos/UpdateCategoriaDto'
+import type { PagedResult } from '../../interfaces/Operation/PagedResultDto'
 
 
 export class ApiCategoriaService {
@@ -20,8 +21,8 @@ export class ApiCategoriaService {
   }
 
   // GetPaged
-  async getPaged(request: OperationRequest): Promise<OperationResult<CategoriaDto[]>> {
-    const response = await this.api.get<OperationResult<CategoriaDto[]>>(
+  async getPaged(request: OperationRequest): Promise<PagedResult<CategoriaDto>> {
+    const response = await this.api.get<PagedResult<CategoriaDto>>(
       `${this.baseUrl}/paged`,
       { params: request }
     )
