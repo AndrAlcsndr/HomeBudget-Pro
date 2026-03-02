@@ -116,7 +116,16 @@ namespace HomeBudget.Application.Services
             if (string.IsNullOrWhiteSpace(dto.Nome))
                 return (false, OperationResult<bool>.Fail("Nome é obrigatório."));
 
+            if (string.IsNullOrWhiteSpace(dto.Cpf))
+                return (false, OperationResult<bool>.Fail("CPF é obrigatório."));
+
+            if (!CpfValidator.IsValid(dto.Cpf))
+                return (false, OperationResult<bool>.Fail("CPF Inválido."));
+
             if (await _repository.PessoaExistente(dto.Nome, dto.Id))
+                return (flowControl: false, value: OperationResult<bool>.Fail("Outro cadastro já possui este nome."));
+
+            if (await _repository.CpfExistente(dto.Cpf, dto.Id))
                 return (flowControl: false, value: OperationResult<bool>.Fail("Outro cadastro já possui este nome."));
 
             if (dto.Nome.Length > 200)
