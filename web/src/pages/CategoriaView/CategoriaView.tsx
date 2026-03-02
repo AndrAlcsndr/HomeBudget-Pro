@@ -1,23 +1,25 @@
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { ApiCategoriaService } from "../../services/CategoriaService/categoriaService";
-
-import type { CategoriaDto } from "../../interfaces/CategoriaDtos/CategoriaDto";
-
-import DataListComponent from "../../components/DataGridComponent/DataGridComponent";
-import SkeletonComponent from "../../components/SkeletonComponent/SkeletonComponent";
-import ModalCriarEditarCategoria from "../../components/ModalCriarEditarCategoriaComponent/ModalCriarEditarCategoria";
+import { empty_Guid } from "../../utils/guid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
   faTrash,
   faUserSlash,
 } from "@fortawesome/free-solid-svg-icons";
+
 import type { UpdateCategoriaDto } from "../../interfaces/CategoriaDtos/UpdateCategoriaDto";
 import type { CreateCategoriaDto } from "../../interfaces/CategoriaDtos/CreateCategoriaDto";
-import { empty_Guid } from "../../utils/guid";
+import type { CategoriaDto } from "../../interfaces/CategoriaDtos/CategoriaDto";
+
+import DataListComponent from "../../components/DataGridComponent/DataGridComponent";
+import SkeletonComponent from "../../components/SkeletonComponent/SkeletonComponent";
+import ModalCriarEditarCategoria from "../../components/ModalCriarEditarCategoriaComponent/ModalCriarEditarCategoria";
 import ModalSuccessError from "../../components/ModalSuccessErrorComponent/ModalSuccessErrorComponent";
 import ModalConfirmarCancelar from "../../components/ModalConfirmarCancelarComponent/ModalConfirmarCancelarComponent";
+
+
 
 
 function CategoriaView() {
