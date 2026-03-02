@@ -4,6 +4,7 @@ using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.DTOs.TransacaoDtos;
 using HomeBudget.Application.Interfaces;
 using HomeBudget.Domain.Entities;
+using HomeBudget.Domain.Enums;
 using HomeBudget.Domain.Interfaces;
 
 namespace HomeBudget.Application.Services
@@ -41,6 +42,8 @@ namespace HomeBudget.Application.Services
             try
             {
                 var entity = _mapper.Map<Transacao>(dto);
+                var transacaoDto = _mapper.Map<TransacaoDto>(dto);
+                CalcularSaldo(transacaoDto, entity);
 
                 await _repository.AddAsync(entity);
 
@@ -50,6 +53,16 @@ namespace HomeBudget.Application.Services
             {
                 return OperationResult<Guid>.Fail($"Erro ao criar transação: {ex.Message}");
             }
+        }
+
+        private static void CalcularSaldo(TransacaoDto dto, Transacao entity)
+        {
+            entity.SomaReceitas = dto.Receitas;
+            entity.SomaDespesas = dto.Despesas;
+            var valorTransacao = entity.SomaReceitas - entity.SomaDespesas;
+
+            entity.Saldo = entity.Tipo == TipoTransacao.Receita
+                ? valorTransacao : valorTransacao;
         }
 
         public async Task<OperationResult<TransacaoDto>> GetByIdAsync(Guid id)
@@ -71,7 +84,7 @@ namespace HomeBudget.Application.Services
             if (entity == null)
                 return OperationResult<bool>.Fail("Transação não encontrada.");
 
-            _repository.Remove(entity);
+            await _repository.DeleteAsync(entity);
 
             return OperationResult<bool>.Ok(true);
         }
@@ -85,7 +98,10 @@ namespace HomeBudget.Application.Services
 
             _mapper.Map(dto, entity);
 
-            _repository.Update(entity);
+            var transacaoDto = _mapper.Map<TransacaoDto>(dto);
+            CalcularSaldo(transacaoDto, entity);
+
+            await _repository.UpdateAsync(entity);
 
             return OperationResult<bool>.Ok(true);
         }
