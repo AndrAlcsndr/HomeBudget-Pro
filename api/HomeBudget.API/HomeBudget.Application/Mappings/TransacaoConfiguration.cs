@@ -33,6 +33,12 @@ public class TransacaoConfiguration : IEntityTypeConfiguration<Transacao>
                .HasColumnType("decimal(18,2)")
                .IsRequired();
 
+        builder.Property(p => p.DataCriacao)
+             .IsRequired();
+
+        builder.Property(p => p.DataModificacao)
+               .IsRequired();
+
         builder.HasOne(t => t.Pessoa)
                .WithMany(p => p.Transacoes)
                .HasForeignKey(t => t.IdPessoa)
