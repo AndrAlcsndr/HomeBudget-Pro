@@ -18,9 +18,7 @@ import SkeletonComponent from "../../components/SkeletonComponent/SkeletonCompon
 import ModalCriarEditarCategoria from "../../components/ModalCriarEditarCategoriaComponent/ModalCriarEditarCategoria";
 import ModalSuccessError from "../../components/ModalSuccessErrorComponent/ModalSuccessErrorComponent";
 import ModalConfirmarCancelar from "../../components/ModalConfirmarCancelarComponent/ModalConfirmarCancelarComponent";
-
-
-
+import { formatDate } from "../../utils/formatDate";
 
 function CategoriaView() {
   const api = new ApiCategoriaService();
@@ -63,11 +61,10 @@ function CategoriaView() {
     { field: "descricao", headerName: "Descrição", width: 110 },
     { field: "finalidade", headerName: "Finalidade", width: 150 },
     {
-      field: "dataCriacaoModificacao",
-      headerName: "Data de Modificação",
+      field: "dataCriacao",
+      headerName: "Data da Criação",
       width: 200,
-      valueFormatter: (params: any) =>
-        new Date(params.value).toLocaleString("pt-BR"),
+      valueFormatter: (params: any) => formatDate(params),
     },
     {
       field: "acoes",
@@ -78,7 +75,7 @@ function CategoriaView() {
       renderCell: (params: any) => {
         const row = params.row;
         return (
-          <div style={{ display: "flex", gap: 8 }}>
+          <div className="flex gap-6 mt-2">
             <Button size="sm" color="warning" onClick={() => handleEdit(row)}>
               <FontAwesomeIcon icon={faEdit} />
             </Button>
@@ -160,7 +157,7 @@ function CategoriaView() {
   };
 
   const handleEdit = (categoria: CreateCategoriaDto | UpdateCategoriaDto) => {
-    setCategoriaEdit(categoria);
+    setCategoriaEdit(JSON.parse(JSON.stringify(categoria)));
     setOpenModal(true);
   };
   const handleDelete = (id: string) => {
