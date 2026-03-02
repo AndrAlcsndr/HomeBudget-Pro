@@ -2,15 +2,17 @@ import { useState } from "react";
 import DataListComponent from "../../../components/DataGridComponent/DataGridComponent";
 import SkeletonComponent from "../../../components/SkeletonComponent/SkeletonComponent";
 
-function TransacaoCategoriaView() {
-  const [loading, setLoading] = useState(false);
+function TransacaoCategoriaView({ loading, rows, columns }: { loading: boolean; rows: any[]; columns: any[] }) {
+  const [loadingState,] = useState(loading);
+  const [columnsState,] = useState<any[]>(columns);
+  const [rowsState,] = useState<any[]>(rows);
 
   return (
     <div className="container mt-4">
-        {loading ? (
+        {loadingState ? (
           <SkeletonComponent show={true} as="list" times={3} />
         ) : (
-          <DataListComponent columns={columns} rows={rows} />
+          <DataListComponent columns={columnsState} rows={rowsState} />
         )}
     </div>
   );
