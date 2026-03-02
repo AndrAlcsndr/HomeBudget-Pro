@@ -43,6 +43,40 @@ function CategoriaView() {
       valueFormatter: (params: any) =>
         new Date(params.value).toLocaleString("pt-BR"),
     },
+    {
+      field: "acoes",
+      headerName: "Ações",
+      width: 200,
+      sortable: false,
+      filterable: false,
+      renderCell: (params: any) => {
+        const row = params.row;
+
+        return (
+          <div style={{ display: "flex", gap: 8 }}>
+            <Button size="sm" color="warning" onClick={() => handleEdit(row)}>
+              <FontAwesomeIcon icon={faEdit} />
+            </Button>
+
+            <Button
+              size="sm"
+              color="error"
+              onClick={() => handleDelete(row.id)}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+
+            <Button
+              size="sm"
+              color="secondary"
+              onClick={() => handleDeactivate(row.id)}
+            >
+              <FontAwesomeIcon icon={faUserSlash} />
+            </Button>
+          </div>
+        );
+      },
+    },
   ];
 
   return (
