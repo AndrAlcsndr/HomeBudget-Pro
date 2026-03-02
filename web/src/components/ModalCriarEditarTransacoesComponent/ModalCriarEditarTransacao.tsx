@@ -43,7 +43,29 @@ function ModalCriarEditarTransacoes({
     }
   }, [transacao, show]);
 
+  function handleChange(
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) {
+    const { name, value } = e.target;
   
+    setForm((prev) => ({
+    ...prev,
+    [name]:
+      name === "tipo"
+        ? Number(value)
+        : name === "receitas" || name === "despesas"
+        ? Number(value)
+        : value,
+  }));
+  }
+
+  function handleSubmit() {
+    onSave({
+      ...form,
+    });
+  }
 
   return (
     <Modal show={show} onHide={onClose} centered>
