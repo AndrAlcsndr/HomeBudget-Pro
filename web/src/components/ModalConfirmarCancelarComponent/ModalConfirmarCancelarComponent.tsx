@@ -10,8 +10,14 @@ interface Props {
 }
 
 function ModalConfirmarCancelar({
-
-}) {
+  show,
+  title = "Confirmar ação",
+  message,
+  confirmText = "Confirmar",
+  cancelText = "Cancelar",
+  onConfirm,
+  onCancel,
+}: Props) {
   return (
     <Modal show={show} onHide={onCancel} centered>
       
