@@ -33,6 +33,10 @@ function PessoaView() {
     type: "success" as "success" | "error",
     message: "",
   });
+  const [confirmModal, setConfirmModal] = useState({
+    show: false,
+    id: "",
+  });
 
    const columns = [
     { field: "nome", headerName: "Nome", width: 150 },
@@ -202,6 +206,17 @@ function PessoaView() {
         message={modalSuccessError.message}
         onClose={() => setModalSuccessError({ ...modalSuccessError, show: false })}
       />
+
+       <ModalConfirmarCancelar
+        show={confirmModal.show}
+        title="Confirmar exclusão"
+        message="Tem certeza que deseja excluir esta pessoa?"
+        confirmText="Excluir"
+        cancelText="Cancelar"
+        onConfirm={() => { excluirPessoa(confirmModal.id); setConfirmModal({ ...confirmModal, show: false }); }}
+        onCancel={() => setConfirmModal({ ...confirmModal, show: false })}
+      />
+
 
 
     </>
