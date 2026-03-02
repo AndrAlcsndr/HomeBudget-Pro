@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HomeBudget.Application.DTOs;
 using HomeBudget.Application.DTOs.PessoaDtos;
 using HomeBudget.Domain.Entities;
 
@@ -25,6 +26,11 @@ namespace HomeBudget.Application.AutoMapper.PessoaProfile
 
             // UpdateDto  -> EntityDto
             CreateMap<UpdatePessoaDto, Pessoa>().ReverseMap();
+
+            // Pessoa  -> GenericOption
+            CreateMap<Pessoa, GenericOptionsDto>()
+                .ForMember(s => s.Label, opt => opt.MapFrom(s => s.Nome))
+                .ForMember(s => s.Value, opt => opt.MapFrom(s => s.Id));
         }
     }
 }

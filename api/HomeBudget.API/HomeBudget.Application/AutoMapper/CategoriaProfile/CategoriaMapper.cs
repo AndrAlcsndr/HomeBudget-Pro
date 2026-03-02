@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HomeBudget.Application.DTOs;
 using HomeBudget.Application.DTOs.CategoriaDtos;
 using HomeBudget.Domain.Entities;
 using Microsoft.OpenApi;
@@ -31,6 +32,11 @@ namespace HomeBudget.Application.AutoMapper.CategoriaProfile
             // Mapping CreateCategoriaDto <- -> UpdateCategoriaDto
             CreateMap<CreateCategoriaDto, UpdateCategoriaDto>()
               .ReverseMap();
+
+            // Categoria  -> GenericOption
+            CreateMap<Categoria, GenericOptionsDto>()
+                .ForMember(s => s.Label, opt => opt.MapFrom(s => s.Nome))
+                .ForMember(s => s.Value, opt => opt.MapFrom(s => s.Id));
         }
 
     }
