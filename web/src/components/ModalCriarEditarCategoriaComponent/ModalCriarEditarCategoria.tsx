@@ -48,6 +48,13 @@ function ModalCriarEditarCategoria({
   return (
     <Modal show={show} onHide={onClose} centered>
 
+      <Modal.Header closeButton>
+        <Modal.Title>
+          {isEdit ? "Editar Categoria" : "Criar Categoria"}
+        </Modal.Title>
+      </Modal.Header>
+
+
  <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
@@ -86,7 +93,7 @@ function ModalCriarEditarCategoria({
           </Form.Group>
         </Form>
       </Modal.Body>
-      
+
     </Modal>
   );
 }
