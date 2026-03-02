@@ -40,6 +40,7 @@ function CategoriaView() {
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       const result = await api.getPaged({
         page: 1,
         pageSize: 10,
