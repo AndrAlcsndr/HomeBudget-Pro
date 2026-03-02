@@ -26,6 +26,40 @@ function PessoaView() {
   const api = new ApiPessoaService();
   const [rows, setRows] = useState<PessoaDto[]>([]);
   const [openModal, setOpenModal] = useState(false);
+  const [pessoaEdit, setPessoaEdit] = useState<PessoaDto>();
+
+
+    const addEditarPessoas = async (
+    pessoa: CreatePessoaDto | UpdatePessoaDto,
+  ) => {
+    try {
+      setLoading(true);
+
+      if (pessoa.nome.trim() === "") {
+        showError("Nome é obrigatório.");
+        return;
+      }
+
+      pessoa.cpf = onlyDigits(pessoa.cpf);
+      if (!isValidCpf(pessoa.cpf)) {
+        showError("CPF inválido.");
+        return;
+      }
+
+      const result =
+        pessoa.id === empty_Guid
+          ? await api.create(pessoa as CreatePessoaDto)
+          : await api.update(pessoa.id, pessoa as UpdatePessoaDto);
+
+      if (result.success) showSuccess(result.message!);
+      else showError(result.message!);
+    } catch (error: any) {
+      showError(error?.response?.data?.detail || 'Erro ao salvar alterações na pessoa.');
+    } finally {
+      setLoading(false);
+      fetchData();
+    }
+  };
 
 
   const fetchData = async () => {
@@ -64,6 +98,19 @@ function PessoaView() {
           <DataListComponent columns={columns} rows={rows} />
         )}
       </div>
+
+      <ModalCriarEditarPessoa
+        show={openModal}
+        pessoa={pessoaEdit}
+        onSave={(pessoa) => {
+          addEditarPessoas(pessoa);
+        }}
+        onClose={() => {
+          setOpenModal(false);
+          setPessoaEdit(undefined);
+        }}
+      />
+
     </>
   );
 }
