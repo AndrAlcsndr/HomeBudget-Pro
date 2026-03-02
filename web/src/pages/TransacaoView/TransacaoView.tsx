@@ -1,11 +1,49 @@
-import { useState } from "react";
-import { Tab, Tabs } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, Tab, Tabs } from "react-bootstrap";
+import { ApiTransacaoService } from "../../services/TransacaoService/transacaoService";
+import { empty_Guid } from "../../utils/guid";
+import { ApiPessoaService } from "../../services/PessoaService/pessoaService";
+import { ApiCategoriaService } from "../../services/CategoriaService/categoriaService";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { formatDate } from "../../utils/formatDate";
+import { groupByMap, type GroupByKey } from "../../enums/GroupByEnum";
+
+import type { CreateTransacaoDto } from "../../interfaces/TransacaoDtos/CreateTransacaoDto";
+import type { UpdateTransacaoDto } from "../../interfaces/TransacaoDtos/UpdateTransacaoDto";
+import type { genericOptionsDto } from "../../interfaces/genericOptionsDto";
+import type { TransacaoDto } from "../../interfaces/TransacaoDtos/TransacaoDto";
+
 import ModalCriarEditarTransacoes from "../../components/ModalCriarEditarTransacoesComponent/ModalCriarEditarTransacao";
 import ModalConfirmarCancelar from "../../components/ModalConfirmarCancelarComponent/ModalConfirmarCancelarComponent";
 import ModalSuccessError from "../../components/ModalSuccessErrorComponent/ModalSuccessErrorComponent";
+import TransacaoPessoaView from "./TransacaoPessoaView/TransacaoPessoaView";
+import TransacaoCategoriaView from "./TransacaoCategoriaView/TransacaoCategoriaView";
+import TransacaoGeralView from "./TransacaoGeralView/TransacaoGeralView";
 
 function TransacaoView() {
+  const api = new ApiTransacaoService();
+  const apiPessoa = new ApiPessoaService();
+  const apiCategoria = new ApiCategoriaService();
+
   const [key, setKey] = useState("pessoa");
+  const [loading, setLoading] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [rows, setRows] = useState<TransacaoDto[]>([]);
+  const [pessoasSelect, setPessoas] = useState<genericOptionsDto[]>([]);
+  const [categoriasSelect, setCategorias] = useState<genericOptionsDto[]>([]);
+  const [transacaoEdit, setTransacaoEdit] = useState<
+    CreateTransacaoDto | UpdateTransacaoDto
+  >();
+  const [modalSuccessError, setModalSuccessError] = useState({
+    show: false,
+    type: "success" as "success" | "error",
+    message: "",
+  });
+  const [confirmModal, setConfirmModal] = useState({
+    show: false,
+    id: "",
+  });
 
   const columns = [
     { field: "descricao", headerName: "Descrição", width: 110 },
@@ -32,7 +70,7 @@ function TransacaoView() {
       filterable: false,
       renderCell: (params: any) => {
         const row = params.row;
-  return (
+        return (
           <div className="flex gap-6 mt-2">
             <Button size="sm" color="warning" onClick={() => handleEdit(row)}>
               <FontAwesomeIcon icon={faEdit} />
@@ -181,16 +219,16 @@ function TransacaoView() {
   return (
     <>
       <div className="flex items-center justify-between mb-3">
-      <Tabs
-      id="controlled-tab-example"
-      activeKey={key}
-      onSelect={(k) => setKey(k!)}
+        <Tabs
+          id="controlled-tab-example"
+          activeKey={key}
+          onSelect={(k) => setKey(k!)}
           className="mb-0"
-    >
+        >
           <Tab eventKey="pessoa" title="Gastos p/ pessoa" />
           <Tab eventKey="categoria" title="Gastos p/ categoria" />
           <Tab eventKey="geral" title="Gastos gerais" />
-    </Tabs>
+        </Tabs>
 
         <Button variant="primary" onClick={() => setOpenModalEdit(true)}>
           + Novo
