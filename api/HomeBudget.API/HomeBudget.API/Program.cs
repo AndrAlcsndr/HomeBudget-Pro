@@ -1,4 +1,5 @@
 using HomeBudget.Application.AutoMapper.CategoriaProfile;
+using HomeBudget.Application.AutoMapper.PessoaProfile;
 using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.Interfaces;
 using HomeBudget.Application.Services;
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<CategoriaProfile>();
+    cfg.AddProfile<PessoaProfile>();
 });
 
 builder.Services.AddCors(options =>
