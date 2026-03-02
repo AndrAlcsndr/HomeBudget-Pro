@@ -1,3 +1,5 @@
+import { GroupBy } from "../../enums/GroupByEnum"
+
 export class OperationRequest {
   page: number
   pageSize: number
@@ -7,6 +9,7 @@ export class OperationRequest {
   tipo?: string
   dataInicial?: Date
   dataFinal?: Date
+  groupBy?: GroupBy = GroupBy.Pessoa
 
   constructor(init?: Partial<OperationRequest>) {
     this.page = init?.page ?? 1
@@ -17,5 +20,6 @@ export class OperationRequest {
     this.tipo = init?.tipo
     this.dataInicial = init?.dataInicial
     this.dataFinal = init?.dataFinal
+    this.groupBy = init?.groupBy
   }
 }
