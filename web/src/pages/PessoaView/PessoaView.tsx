@@ -19,7 +19,6 @@ import {
   faUserSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ModalConfirm from "../../components/ModalConfirmarCancelarComponent/ModalConfirmarCancelarComponent";
 import ModalConfirmarCancelar from "../../components/ModalConfirmarCancelarComponent/ModalConfirmarCancelarComponent";
 
 function PessoaView() {
