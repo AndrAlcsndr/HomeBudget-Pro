@@ -27,9 +27,9 @@ function CategoriaView() {
             pageSize: 10,
           });
   
-          setRows(result.data ?? ([] as CategoriaDto[]));
+        setRows([...(result.items ?? [])]);
         } catch (error) {
-          console.error("Erro ao buscar pessoas:", error);
+        console.error("Erro ao buscar categorias:", error);
         } finally {
           setLoading(false);
         }
