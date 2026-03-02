@@ -31,12 +31,62 @@ function ModalCriarEditarCategoria({
     }
   }, [categoria, show]);
 
+  function handleChange(
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) {
+    const { name, value } = e.target;
 
+    setForm((prev: CreateCategoriaDto) => ({
+      ...prev,
+      [name]: name === "finalidade" ? Number(value) : value,
+    }));
+  }
 
 
   return (
     <Modal show={show} onHide={onClose} centered>
 
+ <Modal.Body>
+        <Form>
+          <Form.Group className="mb-3">
+            <Form.Label>Nome</Form.Label>
+            <Form.Control
+              type="text"
+              name="nome"
+              value={form.nome}
+              onChange={handleChange}
+              placeholder="Digite o nome da categoria"
+            />
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Finalidade</Form.Label>
+            <Form.Select
+              name="finalidade"
+              value={form.finalidade}
+              onChange={handleChange}
+            >
+              <option value={TipoCategoria.Despesa}>Despesa</option>
+              <option value={TipoCategoria.Receita}>Receita</option>
+            </Form.Select>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Descrição</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              name="descricao"
+              value={form.descricao}
+              onChange={handleChange}
+              placeholder="Digite a descrição"
+            />
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      
     </Modal>
   );
 }
