@@ -8,8 +8,30 @@ interface Props {
   onClose: () => void;
 }
 
-function ModalCriarEditarTransacoes({ show, transacao, onSave, onClose }: Props) {
-  const [form, setForm] = useState<TransacaoDto>(new CreateTransacaoDto());
+function ModalCriarEditarTransacoes({
+  show,
+  transacao,
+  pessoas,
+  categorias,
+  onSave,
+  onClose,
+}: Props) {
+  const [form, setForm] = useState<CreateTransacaoDto>(
+    new CreateTransacaoDto(),
+  );
+
+  const camposFinanceiros = [
+    {
+      label: "Receitas",
+      name: "receitas",
+      tipo: TipoTransacao.Receita,
+    },
+    {
+      label: "Despesas",
+      name: "despesas",
+      tipo: TipoTransacao.Despesa,
+    },
+  ];
 
   const isEdit = form.id !== empty_Guid;
 
