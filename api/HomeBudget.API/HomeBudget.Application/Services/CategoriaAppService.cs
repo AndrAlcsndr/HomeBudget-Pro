@@ -27,7 +27,7 @@ namespace HomeBudget.Application.Services
             return new PagedResult<CategoriaDto>
             {
                 Items = _mapper.Map<List<CategoriaDto>>(items),
-                Total = 0,
+                Total = total,
                 Page = request.Page,
                 PageSize = request.PageSize
             };
@@ -116,6 +116,7 @@ namespace HomeBudget.Application.Services
                 }
 
                 var categoria = _mapper.Map<Categoria>(dto);
+                categoria.Finalidade = dto.Finalidade;
 
                 await _repository.UpdateAsync(categoria);
 
