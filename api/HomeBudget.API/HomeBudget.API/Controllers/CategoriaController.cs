@@ -1,4 +1,5 @@
-﻿using HomeBudget.Application.DTOs.CategoriaDtos;
+﻿using HomeBudget.Application.DTOs;
+using HomeBudget.Application.DTOs.CategoriaDtos;
 using HomeBudget.Application.DTOs.Pagination;
 using HomeBudget.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,16 @@ namespace HomeBudget.API.Controllers
         public async Task<IActionResult> GetPaged([FromQuery] PagedRequest request)
         {
             var result = await _service.GetPagedAsync(request);
+            return Ok(result);
+        }
+
+        /// <summary>Obtem uma consulta de todas as categorias do sistema para seleção </summary>
+        [HttpGet("getAllForSelect")]
+        [ProducesResponseType(typeof(PagedResult<List<GenericOptionsDto>>), 200)]
+        [ProducesResponseType(typeof(ProblemDetails), 404)]
+        public async Task<IActionResult> GetAllForSelect()
+        {
+            var result = await _service.GetAllForSelect();
             return Ok(result);
         }
 

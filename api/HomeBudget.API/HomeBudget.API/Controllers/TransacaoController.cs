@@ -28,7 +28,7 @@ namespace HomeBudget.API.Controllers
             if (!result.Success)
                 return BadRequest(new ProblemDetails { Title = result.Title, Detail = result.Message });
 
-            return Ok(result.Data);
+            return Ok(result);
         }
 
         /// <summary>Obtem uma consulta paginada de todos as categorias do sistema </summary>
@@ -69,7 +69,7 @@ namespace HomeBudget.API.Controllers
             if (!result.Success)
                 return BadRequest(new ProblemDetails { Title = result.Title, Detail = result.Message });
 
-            return Ok(result.Data);
+            return Ok(result);
         }
     }
 }
