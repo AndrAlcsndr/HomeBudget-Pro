@@ -34,6 +34,65 @@ function PessoaView() {
     message: "",
   });
 
+   const columns = [
+    { field: "nome", headerName: "Nome", width: 150 },
+    { field: "idade", headerName: "Idade", width: 110 },
+    {
+      field: "cpf",
+      headerName: "CPF",
+      width: 150,
+      valueFormatter: (params: any) => maskCPF(params),
+    },
+    {
+      field: "dataCriacao",
+      headerName: "Data de Criação",
+      width: 200,
+      valueFormatter: (params: any) => formatDate(params),
+    },
+    {
+      field: "acoes",
+      headerName: "Ações",
+      width: 200,
+      sortable: false,
+      filterable: false,
+      renderCell: (params: any) => {
+        const row = params.row;
+
+        return (
+          <div className="flex gap-6">
+            <Button
+              className="mt-2"
+              size="sm"
+              color="warning"
+              onClick={() => handleEdit(row)}
+            >
+              <FontAwesomeIcon icon={faEdit} />
+            </Button>
+
+            <Button
+              size="sm"
+              className="mt-2"
+              color="error"
+              onClick={() => handleDelete(row.id)}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+
+            <Button
+              size="sm"
+              className="mt-2"
+              color="secondary"
+              onClick={() => handleDeactivate(row.id)}
+            >
+              <FontAwesomeIcon icon={faUserSlash} />
+            </Button>
+          </div>
+        );
+      },
+    },
+  ];
+
+
    const showSuccess = (message: string) => {
     setModalSuccessError({ show: true, type: "success", message });
   };
