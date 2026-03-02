@@ -167,6 +167,23 @@ function PessoaView() {
       }
     };
 
+    const excluirPessoa = async (id: string) => {
+    try {
+      setLoading(true);
+
+      const result = await api.delete(id);
+
+      if (result.success) showSuccess(result.message!);
+      else showError(result.message!);
+    } catch (error) {
+      console.error("Erro ao excluir pessoa:", error);
+    } finally {
+      setLoading(false);
+      fetchData();
+    }
+  };
+
+
   useEffect(() => {
     fetchData();
   }, []);
